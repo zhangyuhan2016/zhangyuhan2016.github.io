@@ -1,0 +1,62 @@
+html,body{
+    height: 100%;
+
+}
+body{
+    margin: 0;
+    background-image: url('../image/dishu/bg.jpg');
+    overflow: hidden;
+    cursor: url("../image/dishu/cursor.png"),auto;
+
+}
+#score{
+    position: absolute;
+    top: 30px;
+    left: 0;
+    padding: 10px 20px;
+    background-color: #999;
+    border-radius: 0px 5px 5px 0px;
+}
+table{
+    margin: 0 auto;
+
+}
+td{
+    width: 150px;
+    height: 150px;
+    background-image: url('../image/dishu/hole.png');
+    background-repeat: no-repeat;
+    background-size: 120px 60px;
+    background-position: center bottom;
+    text-align: center;
+    vertical-align: bottom;
+}
+td>img{
+    width: 80px;
+    height: 0px;
+    position: relative;
+    bottom: 20px;
+}
+.up{
+    animation:  up 0.3s linear forwards;
+}
+@keyframes up{
+    from{
+        height: 0;
+    }
+    to{
+        height: 70px;
+    }
+}
+
+.down{
+    animation:  down 0.1s linear forwards;
+}
+@keyframes down{
+    from{
+        height: 70px;
+    }
+    to{
+        height: 0;
+    }
+}
