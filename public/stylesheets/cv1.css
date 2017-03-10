@@ -1,0 +1,176 @@
+/*介绍页面*/
+.introduce{
+    background: linear-gradient(to bottom right, rgba(200, 163, 33, 0.12) 0%, rgba(159, 102, 16, 0.48) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100%;
+}
+.introduce>span{
+    margin-top: 50px;
+    line-height: 50px;
+    height: 50px;
+    font-size: 50px;
+    width: 100%;
+    text-align: center;
+    letter-spacing: -0.1em;
+
+}
+img[name=head]{
+
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+
+    filter: drop-shadow(5px 5px 10px black);
+}
+img[name=head]:hover{
+    transform: scale(1.1);
+}
+img[name=down]{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    opacity: 0;
+    animation: downAn 2s 0.5s infinite;
+}
+
+/*works 页面*/
+figure{
+    margin: 0;
+    font-size: 40px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap:wrap;
+    background: linear-gradient(to bottom right, rgba(37, 200, 112, 0.12) 0%, rgba(146, 159, 73, 0.48) 100%);
+
+}
+h3{
+    width: 100%;
+    font-size: 30px;
+    height: 30px;
+    text-align: center;
+}
+.test{
+    margin: 5px;
+    text-align: center;
+    width: 30%;
+    min-width: 400px;
+    height: 400px;
+    line-height: 400px;
+    position: relative;
+    overflow: hidden;
+    color: black;
+}
+/* a 文字*/
+.test>a{
+    text-decoration:none;
+    color: #333333;
+}
+.test>a:hover{
+    font-size: 42px;
+}
+.test>a:before{
+    content: '';
+    display: inline-block;
+    background: url("../image/cv1/链接.png");
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+/*设置背景*/
+.works-1:after,.works-1:before{
+    content:'';
+    background: url('../image/cv1/打地鼠.png') 50%;
+}
+.works-2:after,.works-2:before{
+    content:'';
+    background: url('../image/cv1/gameType.png') 50%;
+}
+.works-3:after,.works-3:before{
+    content:'';
+    background: url('../image/cv1/piao.png') 50%;
+}
+/*背景clip*/
+.test:after{
+    width: 400px;
+    height: 400px;
+    clip:rect(200px,400px,400px,0);
+    display: block;
+    position: absolute;
+    top:0;
+    left: 0;
+    transition: 1s;
+}
+.test:before{
+    transition: 1s;
+    width: 400px;
+    height: 400px;
+    clip:rect(0,400px,200px,0);
+    top:0;
+    left: 0;
+    position: absolute;
+
+}
+/*过渡*/
+.test:hover:before{
+
+    top:-40px;
+}
+.test:hover:after{
+    top:40px;
+}
+/*关于我*/
+#about{
+    background: linear-gradient(to bottom right, rgba(200, 143, 34, 0.12) 0%, rgba(146, 159, 73, 0.48) 100%);
+
+}
+#about p{
+    width: 100%;
+    height: 50px;
+    font-size: 35px;
+    text-align: center;
+    white-space:nowrap;
+
+}
+#about a{
+    text-decoration:none;
+    color: #333333;
+}
+#about a:hover{
+    font-size: 42px;
+}
+
+a[name=email]:before{
+    content: '';
+    display: inline-block;
+    background: url("../image/cv1/邮箱.png");
+    background-size: cover;
+    width: 45px;
+    height: 37px;
+    margin-right: 5px;
+}
+a[name=tel]:before{
+    content: '';
+    display: inline-block;
+    background: url("../image/cv1/电话.png");
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+/*动画*/
+@keyframes downAn {
+    from{
+        opacity:0;
+        bottom: 20px;
+    }
+    to{
+        opacity:1;
+        bottom: 0;
+    }
+}
