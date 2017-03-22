@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D文字效果实现</title>
+    <link rel="stylesheet" href="Font_3D.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #text{
+            width: 130px;
+            height: 30px;
+            font-size: 30px;
+            z-index: 9;
+        }
+        .center{
+            /*该类用于实现居中*/
+            top:0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+<div id="show">
+    <span class="text-3d" value="H">H</span>
+    <span class="text-3d" value="i">i</span>
+</div>
+<input type="text" placeholder="请输入" id="text" class="center">
+
+
+<script src="../js/jquery-2.2.4.min.js"></script>
+<script>
+
+    $('#text').keyup(function () {
+        $('#show').html('');
+        var font=$(this).val();
+        for(var i=0;i<font.length;i++) {
+            print(font.substring(i, (i+1)))
+        }
+    })
+    function print(font) {
+        var text='<span class="text-3d" value='+ font+'>'+font+'</span>';
+        $('#show').append(text);
+    }
+</script>
+
+</body>
+</html>
