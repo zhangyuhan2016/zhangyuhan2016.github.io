@@ -2,16 +2,32 @@
 <html>
 <head>
   <title>打字效果</title>
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="../public/stylesheets/printText.css">
+
 <style>
 body{
   background: #ab8804;
   word-wrap: break-word; 
     word-break: normal; 
 }
+@media screen and (max-width: 700px) {
+  
+   .print-text{
+    font-size: 2.5em !important;
+  }
+  .print-text::after {
+    margin-top: 0.15em !important;
+    height: 1em !important;
+}
 
+  
+}
 </style>
-<link rel="stylesheet" type="text/css" href="../public/stylesheets/printText.css">
+</head>
+
 <body>
 
 
