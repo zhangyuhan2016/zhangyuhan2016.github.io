@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>3D文字效果实现</title>
-    <link rel="stylesheet" href="Font_3D.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../public/stylesheets/Font_3D.css">
     <style>
         *{
             margin: 0;
@@ -24,6 +26,18 @@
             margin: auto;
             position: absolute;
         }
+        .text-3d::after{
+            right: 0;
+            top:0;
+        }
+        @media screen and (max-width: 700px) {
+
+           #text{
+               display: none;
+           }
+
+
+        }
     </style>
 </head>
 <body>
@@ -31,6 +45,10 @@
 <div id="show">
     <span class="text-3d" value="H">H</span>
     <span class="text-3d" value="i">i</span>
+    <span class="text-3d" value="!">!</span>
+    <span class="text-3d" value="Y">Y</span>
+    <span class="text-3d" value="e">e</span>
+    <span class="text-3d" value="s">s</span>
 </div>
 <input type="text" placeholder="请输入" id="text" class="center">
 

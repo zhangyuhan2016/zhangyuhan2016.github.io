@@ -1,93 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <title>张雨涵的秘密花园</title>
-  <meta charset="UTF-8">
-  <style>
-    ::-webkit-scrollbar{
-      width: 0px;
-      background: red;
-    }
-    html,body{
-      height: 100%;
-    }
-    #mp4{
-      position: fixed;
-      min-width: 100%;
-      z-index: -100;
-      bottom: 0;
-      left:0;
-    
-    }
-    #Fm{
-      display: flex;
-      align-items: center; 
-      justify-content: center;
-      height: 100%;
-    }
-  
-    .nav-w{
-          background-color: rgba(0,0,0,.5)!important;
-          border-color: rgba(255, 255, 255, 0.1)!important;
-    }
-    .nav-test{
-      color:#f5f5f5!important;
-    }
-    .text-3d{
-    font-size: 1.5em !important;
-}
-.print-text::after{
-      margin-top: -6px!important;
-}
-  </style>
-  <link rel="stylesheet" href="../public/stylesheets/Font_3D.css">
-  <link href="../public/stylesheets/printText.css" rel="stylesheet">
-  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <link href='https://cdn.webfont.youziku.com/webfonts/nomal/94483/47031/58d29c40f629d80ec4963310.css' rel='stylesheet' type='text/css' />
-  <link href='https://cdn.webfont.youziku.com/webfonts/nomal/94483/47007/58d29ba8f629d80ec496330e.css' rel='stylesheet' type='text/css' />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>张雨涵的秘密花园</title>
+    <style>
+         ::-webkit-scrollbar{
+           width: 0px;
+         }
+        html,body {
+            height: 100%;
+        }
+        #mp4 {
+            position: fixed;
+            min-width: 100%;
+            z-index: -100;
+        }
+
+        #Fm {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .nav-w {
+            background-color: rgba(0, 0, 0, .5) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
+
+        }
+
+        .nav-test {
+            color: #f5f5f5 !important;
+        }
+
+        .navbar-collapse {
+            border-color: rgba(0, 0, 0, 0.25) !important;
+
+        }
+
+        .text-3d {
+            font-size: 1.5em !important;
+        }
+
+        .print-text::after {
+            margin-top: -6px !important;
+        }
+    </style>
+    <link rel="stylesheet" href="../public/stylesheets/Font_3D.css">
+    <link href="../public/stylesheets/printText.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://cdn.webfont.youziku.com/webfonts/nomal/94483/47031/58d29c40f629d80ec4963310.css'
+          rel='stylesheet' type='text/css'/>
+    <link href='https://cdn.webfont.youziku.com/webfonts/nomal/94483/47007/58d29ba8f629d80ec496330e.css'
+          rel='stylesheet' type='text/css'/>
 </head>
 <body>
 
 <nav class="navbar  navbar-fixed-bottom  navbar-default nav-w">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">
-        <span class="text-3d" value="Z">Z</span>
-      </a>
-    <p class="navbar-text nav-test">Bon voyage</p>
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <span class="text-3d" value="Z">Z</span>
+            </a>
+            <p class="navbar-text nav-test">Bon voyage</p>
+        </div>
+        <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#" class="nav-test">Demo</a></li>
+                <li><a href="#" class="nav-test">Note</a></li>
+                <li><a href="#" class="nav-test">Other</a></li>
+            </ul>
+        </div>
     </div>
-    <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="#"  class="nav-test">Demo</a></li>
-        <li><a href="#"  class="nav-test">Note</a></li>
-        <li><a href="#"  class="nav-test">Other</a></li>
-      </ul>
-      </div>
-    </div> 
 </nav>
 
 <div class="banner" id="Fm">
-<div class="jumbotron text-center"  style="background-color: rgba(0,0,0,.0001);">
-  <h1 class="nav-test css99bdba34017113">I’ll try anything once</h1>
-  <br>
-  <p class="css99bd9530617113 nav-test print-text" style="font-size: 2em">love is <span id="title"></span></p>
- 
+    <div class="jumbotron text-center" style="background-color: rgba(0,0,0,.0001);">
+        <h1 class="nav-test css99bdba34017113">I’ll try anything
+            <br>
+            <span class="text-3d" value="o">o</span>
+            <span class="text-3d" value="n">n</span>
+            <span class="text-3d" value="c">c</span>
+            <span class="text-3d" value="e">e</span>
+        </h1>
+        <br>
+        <p class="css99bd9530617113 nav-test print-text" style="font-size: 2em">love is <span id="title"></span></p>
+
+    </div>
+    <video loop autoplay poster="../public/image/ying.jpg" class="embed-responsive-item" id="mp4">
+        <source src="../public/audio/ying.mp4" type="video/mp4">
+    </video>
 </div>
-<video loop autoplay poster="../public/image/ying.jpg" class="embed-responsive-item" id="mp4">
-      <source src="../public/audio/ying.mp4" type="video/mp4">
-</video>
-</div>
-
-
-
-    
-
 
 
 <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
@@ -95,8 +106,9 @@
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../public/javascripts/printText.js"></script>
 <script>
-  aText.start("#title",[" not supposed to be cute",
-" raw and destructive"]);
-</script>>
+    aText.start("#title", [" not supposed to be cute",
+        " raw and destructive"]);
+</script>
+>
 </body>
 </html>

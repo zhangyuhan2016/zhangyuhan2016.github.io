@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Welcome</title>
+    <link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    <link href='https://cdn.webfont.youziku.com/webfonts/nomal/94483/28818/58cff00cf629db0dac57bd65.css' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <style>
+        @media screen and (orientation: portrait) {
+            html{
+                width : 100% ;
+                height : 100% ;
+                background-color: white ;
+                overflow : hidden;
+            }
+            body{
+                width : 100% ;
+                height : 100% ;
+                background-color: red ;
+                overflow : hidden;
+            }
+
+        }
+        @media screen and (orientation: landscape) {
+            html{
+                width : 100% ;
+                height : 100% ;
+                background-color: white ;
+            }
+            body{
+                width : 100% ;
+                height : 100% ;
+                background-color: white ;
+            }
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            overflow: hidden;
+
+        }
+        .userIndex{
+            height: 100%;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+        .userUI,.userReg{
+            width: 100%;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction:column;
+
+        }
+        .userUI  div:nth-child(1),.userReg  div:nth-child(1){
+            font-size: 80px;
+            font-family:'againstmyself9916af94917113';
+            z-index: 2;
+        }
+        .userFrom{
+            width: 400px;
+            z-index: 2;
+        }
+        .wrapper{
+
+            background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+            opacity: 0.8;
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        ul{
+            display: block;
+            list-style-type:disc ;
+        }
+        li{
+            position: absolute;
+            display: block;
+            list-style: none;
+            bottom: -200px;
+            background: rgba(255,255,255,0.15);
+            animation: lilili infinite;
+        }
+        @keyframes lilili {
+            to{
+                transform: rotate(100deg);
+                bottom: 102%;
+            }
+        }
+        form input {
+            outline: 0;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 250px;
+            border-radius: 3px;
+            padding: 10px 15px;
+            margin: 0 auto 10px auto;
+            display: block;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+            transition-duration: 0.25s;
+            font-weight: 300;
+        }
+        form input:hover:focus{
+            background-color: white;
+            width: 300px;
+            color: #53e3a6;
+        }
+        form input:hover{
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        form button {
+            display: block;
+            margin: 0 auto;
+            outline: 0;
+            background-color: white;
+            border: 0;
+            padding: 10px 15px;
+            color: #53e3a6;
+            border-radius: 3px;
+            width: 250px;
+            cursor: pointer;
+            font-size: 18px;
+            transition-duration: 0.25s;
+        }
+        form button:hover{
+            background-color: rgba(255, 255, 255, 0.9);
+            width: 255px;
+        }
+        .userUI div:nth-child(3), .userReg div:nth-child(3){
+            text-align: right;
+            width: 250px;
+            padding: 10px 0;
+            z-index: 2;
+
+        }
+        .userIndex a{
+            text-decoration:none;
+            color: white;
+        }
+        .userIndex a:hover{
+            font-size: 105%;
+        }
+        .userBo{
+            z-index: 3;
+        }
+        .userBo2{
+
+            display: none;
+            z-index: 3;
+        }
+        .userBo2 input:nth-child(2),input:nth-child(3),input:nth-child(4){
+            display: none;
+        }
+        .userBo2 #checkCode{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper"></div>
+   <div class="userIndex">
+       <div class="userBo">
+           <div class="userUI">
+               <div>Welcome</div>
+               <div class="userFrom">
+                   <form action="">
+                       <input type="text" placeholder="Name or Email" onfocus="this.placeholder=''" onblur="this.placeholder='Name or Email'">
+                       <input type="password" placeholder="password" onfocus="this.placeholder=''" onblur="this.placeholder='password'">
+                       <button type="submit" >登录</button>
+                   </form>
+               </div>
+               <div><a href="#"><span class="glyphicon glyphicon-hand-right"></span>  新用户戳这里</a></div>
+           </div>
+       </div>
+       <div class="userBo2">
+           <div class="userReg">
+               <div>New User</div>
+               <div class="userFrom">
+                   <form action="">
+
+                           <input type="email" name="email" placeholder="Email"  onfocus="this.placeholder=''" onblur="this.placeholder='Email'">
+                           <input type="text" name="checkCode" placeholder="Check Code" onfocus="this.placeholder=''" onblur="this.placeholder='Check Code'">
+
+                           <input type="text" name="name" placeholder="Name" onfocus="this.placeholder=''" onblur="this.placeholder='Name'">
+                           <input type="password" name="password" placeholder="password" onfocus="this.placeholder=''" onblur="this.placeholder='password'">
+                           <button id="checkEmail" type="button">注册</button>
+                           <button id="checkCode" type="button">继续</button>
+                   </form>
+               </div>
+               <div><a href="#"><span class="glyphicon glyphicon-hand-right"></span>  返回登录</a></div>
+           </div>
+       </div>
+    </div>
+   </div>
+
+    <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="../public/javascripts/upward.square.js"></script>
+    <script>
+        /*登录，注册界面的切换*/
+        $('.userBo a').on('click',function () {
+            $('.userBo').addClass('animated flip').fadeOut(300);
+            $('.userBo2').addClass('animated flip').fadeIn(100);
+        })
+        $('.userBo2 a').on('click',function () {
+            $('.userBo').removeClass('flip');
+            $('.userBo2').removeClass('flip');
+            $('.userBo2').addClass('animated flipOutY').fadeOut(200);
+            $('.userBo').addClass('animated flipInY').fadeIn(200);
+      })
+        /*ajax邮箱*/
+        let email;
+        let tempcode;
+        $(".userReg #checkEmail").on('click',function () {
+            email=$(".userReg input[name='email']").val();
+            let tempButton=(str)=> $('.userReg #checkEmail').text(str);
+            tempButton('正在发送');
+
+
+            $.post('/userReg',{
+                email
+            },function (data) {
+                console.log("Data: "+ data.status,data,Boolean(data.status));
+                if(Boolean(data.status)){
+                    tempcode=data.code;
+                    codeShow(1);
+                    $('#checkEmail').fadeOut(100);
+
+                    $('#checkCode').fadeIn().css({display:'block'});
+                }
+            });
+        })
+        /*继续注册*/
+        $(".userReg #checkCode").on('click',function () {
+            let code=$(".userReg input[name='checkCode']").val();
+            if(code===tempcode){
+                codeHide(0);codeHide(1);
+                codeShow(2);codeShow(3);
+                $('.userReg #checkCode').text('完成').attr('id','checkOver');
+            }else{
+                $("input[name='checkCode']").removeClass('fadeInDown').addClass('wobble');
+                setTimeout(function () {
+                    $("input[name='checkCode']").removeClass('wobble')
+                },800)
+            }
+        })
+        /*完成注册*/
+        $('.userReg').on('click','#checkOver',function () {
+            let tempTF=$("input[name='name']").val().length;
+            if(tempTF){
+                let name=$("input[name='name']").val();
+                let password=$("input[name='password']").val();
+                $.post('/userReg',{
+                    email,name,password
+                },function (data) {
+                    console.log("Data: "+ data.status,data,Boolean(data.status));
+                    if(Boolean(data.status)){
+                        console.log('注册成功')
+                    }
+                });
+            }
+        })
+
+
+
+
+        /*输入框开启*/
+        function codeShow(n) {
+            $('.userReg input:eq('+n+')').addClass('animated fadeInDown').css({display:'block'})
+        }
+        /*输入框隐藏*/
+        function codeHide(n) {
+            $('.userReg input:eq('+n+')').removeClass('fadeInDown').fadeOut().css({display:'none'});
+        }
+    </script>
+</body>
+</html>

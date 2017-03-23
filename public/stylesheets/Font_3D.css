@@ -2,7 +2,7 @@
     /*中间层（蓝色那个）*/
     z-index: 2;
     color:deepskyblue;
-    font-size: 100px;
+    font-size:15em;
     position: relative;
 }
 .text-3d:before{
@@ -32,7 +32,8 @@
     content: attr(value);               /*获取value*/
     color:  rgba(144,144,144,0.3);      /*设置value的颜色(0.2等于透明度20%)*/
 
-    left: 2px;/*相对于中间层往左挪3px*/
+    left: 0;
+
     transition: transform 0.3s ;         /*定义过渡动画的属性名,时长*/
     transform-origin: 0% 50%;              /*设置旋转的基准点*/
 
