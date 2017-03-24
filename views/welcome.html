@@ -3,27 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>张雨涵的秘密花园</title>
+    <title>Home</title>
     <style>
-         ::-webkit-scrollbar{
-           width: 0px;
-         }
+        @media screen  and (max-width: 700px) {
+            #Fm video{
+                display: none;
+            }
+            #Fm img{
+                display: block!important;
+            }
+
+        }
+         /*::-webkit-scrollbar{*/
+           /*width: 0px;*/
+         /*}*/
         html,body {
             height: 100%;
         }
-        #mp4 {
+        /*#Fm {*/
+            /*display: flex;*/
+            /*align-items: center;*/
+            /*justify-content: center;*/
+            /*height: 100%;*/
+        /*}*/
+        #Fm .mp4{
             position: fixed;
+            z-index: -99;
             min-width: 100%;
-            z-index: -100;
+            min-height: 100%;
         }
-
-        #Fm {
+        #Fm img{
+            display: none;
+        }
+        #Fm{
             display: flex;
+            height: 100%;
             align-items: center;
             justify-content: center;
-            height: 100%;
         }
-
         .nav-w {
             background-color: rgba(0, 0, 0, .5) !important;
             border-color: rgba(255, 255, 255, 0.1) !important;
@@ -38,7 +55,6 @@
             border-color: rgba(0, 0, 0, 0.25) !important;
 
         }
-
         .text-3d {
             font-size: 1.5em !important;
         }
@@ -83,6 +99,10 @@
 </nav>
 
 <div class="banner" id="Fm">
+    <video loop autoplay poster="../public/image/ying.jpg" class="mp4">
+        <source  src="../public/audio/ying.mp4" type="video/mp4">
+    </video>
+    <img src="../public/image/ying.jpg" class="mp4" alt="鹰击长空">
     <div class="jumbotron text-center" style="background-color: rgba(0,0,0,.0001);">
         <h1 class="nav-test css99bdba34017113">I’ll try anything
             <br>
@@ -93,11 +113,8 @@
         </h1>
         <br>
         <p class="css99bd9530617113 nav-test print-text" style="font-size: 2em">love is <span id="title"></span></p>
-
     </div>
-    <video loop autoplay poster="../public/image/ying.jpg" class="embed-responsive-item" id="mp4">
-        <source src="../public/audio/ying.mp4" type="video/mp4">
-    </video>
+
 </div>
 
 
@@ -106,8 +123,7 @@
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="../public/javascripts/printText.js"></script>
 <script>
-    new aText.start("#title", [" not supposed to be cute",
-        " raw and destructive"]);
+    aText.start("#title", [" not supposed to be cute"," raw and destructive"]);
 </script>
 </body>
 </html>
