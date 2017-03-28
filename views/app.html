@@ -17,10 +17,22 @@
         #tan{
             background: lemonchiffon;
         }
+        #pomodoro{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: navajowhite;
+            text-align: center;
+            line-height: 200px;
+            font-size: 50px;
+        }
 
     </style>
 </head>
 <body>
+<div id="pomodoro" v-on:click="reTime">
+    <span>{{pTime}}</span>
+</div>
 <div id="userInput">
     <!--事件触发器-->
     <div id="ck" v-if="c_ok" class="userUI">
@@ -60,6 +72,24 @@
     var p = {
         template: '<div></div>'
     }
+    var pop=new Vue({
+        el:'#pomodoro',
+        data:{
+            pTime:25,
+
+        },
+        methods:{
+            reTime:function () {
+                console.info("开始倒计时");
+                let tempTime=this.pTime*60;
+                setInterval(function () {
+                    let t=tempTime--%60;
+                    let b=t<10?"0"+t:t;
+                    pop.pTime=parseInt(tempTime/60)+":"+b;
+                },1000);
+            }
+        }
+    })
 
     var app = new Vue({
         el: '#userInput',
