@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>app</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .c_ok{
+            border-radius: 50%;
+        }
+
+        #ck{
+            background: yellow;
+        }
+        #tan{
+            background: lemonchiffon;
+        }
+
+    </style>
+</head>
+<body>
+<div id="userInput">
+    <!--事件触发器-->
+    <div id="ck" v-if="c_ok" class="userUI">
+        <button   v-on:click="c_ok=!c_ok" class="btn btn-primary btn-lg c_ok">+</button>
+    </div>
+    <!--第一场景 :用户创建事件-->
+    <div id="tan" v-if="!c_ok" class="userUI row">
+        <p class="bg-success">制定您的未来计划</p>
+        <div class="col-md-3">
+            <div class="input-group">
+                <input type="text" class="form-control"  placeholder="做什么">
+                <input type="date" class="form-control"  placeholder="在哪一天">
+                <input type="text" class="form-control"  placeholder="怎么做">
+                <span class="input-group-addon">h</span>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+        <button  v-on:click="c_ok=!c_ok" class="btn btn-primary btn-lg c_ok">ok</button>
+    </div>
+</div>
+
+
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.2.1/vue.min.js"></script>
+
+<script>
+
+    var p = {
+        template: '<div></div>'
+    }
+
+    var app = new Vue({
+        el: '#userInput',
+        data: {
+            c_ok:true,
+            name: "读书",
+            time: 20,
+            cycle: '7',
+        },
+        computed: {
+            dayTime: function () {
+                return (this.time / parseInt(this.cycle)).toFixed(2) + "h/天"
+            }
+        }
+    })
+</script>
+
+</body>
+</html>
