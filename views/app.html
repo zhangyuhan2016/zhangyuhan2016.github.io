@@ -30,6 +30,34 @@
     </style>
 </head>
 <body>
+<div id="uuu">
+
+
+    <div class="input-group">
+        <span class="input-group-addon">要做什么</span>
+        <input type="text" class="form-control">
+        <span class="input-group-addon">在哪一天</span>
+        <input type="date" class="form-control">
+        <span class="input-group-addon">提醒</span>
+        <button type="button" class="btn btn-primary">OFF</button>
+        <button type="button" class="btn">ON</button>
+        <span class="input-group-addon">只此一次</span>
+        <select class="form-control">
+            <option>每天</option>
+            <option>每周一</option>
+            <option>每周二</option>
+            <option>每周三</option>
+            <option>每周四</option>
+            <option>每周五</option>
+            <option>每周六</option>
+            <option>每周日</option>
+        </select>
+        <span class="input-group-addon">想做多久</span>
+        <input type="time" class="form-control">
+    </div>
+
+</div>
+
 <div id="pomodoro" v-on:click="reTime">
     <span>{{pTime}}</span>
 </div>
