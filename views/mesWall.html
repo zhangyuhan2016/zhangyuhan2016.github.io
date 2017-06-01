@@ -9,7 +9,9 @@
                 margin: 0;
                 padding: 0;
             }
-            
+            .popover-title{
+                display: block  !important;
+            }
         </style>
     </head>
     <body>
@@ -45,6 +47,7 @@
         <script>
             // 数据存放点
             let mesArr=[];
+            let strArr=[];
             // 配置Wilddog
             let config = {
                     authDomain: "danmu.wilddog.com",
@@ -54,7 +57,11 @@
             // 绑定 'child_added' 事件，当 message 节点下有子节点新增时，就会触发回调，回调的 `snapshot` 对象包含了新增的数据
             ref.child('messages').on('child_added', function(snapshot) {
                 mesArr.push(snapshot.val());
+                mess(snapshot.val().title,snapshot.val().content);
                 creAre(mesArr);
+            });
+             ref.child('message').on('child_added', function(snapshot) {
+                strArr.push(snapshot.val());
             });
             // 随机坐标
             let coordinate=(x=1000,y=500)=>Math.floor(Math.random()*x)+","+Math.floor(Math.random()*y);
@@ -136,8 +143,8 @@
             // 提交数据
             $('#up').on('click',function(){
                 // 获取输入框的数据
-                let title=$('#name').val();
-                let text = $("#tst").val();
+                let title=$('#name').val()||"佚名";
+                let text = $("#tst").val()||strArr[Math.floor(Math.random()*strArr.length)];
                 // 清空文本框
                 $('#name').val("");
                 $("#tst").val("");
@@ -149,6 +156,23 @@
                         "content":text 
                 });
             })
+            // 通知
+            function mess(tit,con){
+
+                Notification.requestPermission(function (perm) {  
+                    if (perm === "granted") { 
+                        var notification = new Notification(tit+"  发布了新留言哦~:", {  
+                         dir: "auto",  
+                         lang: "hi",  
+                         tag: "testTag",  
+                         icon: "https://avatars3.githubusercontent.com/u/18086072?v=3&s=40",  
+                         body: con
+                         }) 
+                    }else{
+                        console.log("禁止提示")
+                    }
+                })
+            }
 </script>
     </body>
 </html>
