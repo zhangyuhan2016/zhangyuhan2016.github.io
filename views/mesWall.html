@@ -101,7 +101,7 @@
              startIntro();
         </script>
         <script>
-            // 数据存放点
+          // 数据存放点
             let mesArr=[];
             let strArr=[];
             // 配置Wilddog
@@ -109,7 +109,7 @@
                     authDomain: "danmu.wilddog.com",
                     syncURL: "https://demo-tanmu.wilddogio.com"};
             wilddog.initializeApp(config);
-            var ref = wilddog.sync().ref();
+            let ref = wilddog.sync().ref();
             // 绑定 'child_added' 事件，当 message 节点下有子节点新增时，就会触发回调，回调的 `snapshot` 对象包含了新增的数据
             ref.child('messages').on('child_added', function(snapshot) {
                 mesArr.push(snapshot.val());
@@ -200,7 +200,7 @@
                     };
             })
             // 提交数据
-            $('#up').on('click',function(){
+            function upData(){
                 // 获取输入框的数据
                 let title=$('#name').val()||"佚名";
                 let text = $("#tst").val()||strArr[Math.floor(Math.random()*strArr.length)];
@@ -214,26 +214,40 @@
                         "title": title,
                         "content":text 
                 });
+            }
+            $('#up').on('click',function(){
+                upData();
             })
             // 通知
             function mess(tit,con){
-
                 Notification.requestPermission(function (perm) {  
                     if (perm === "granted") { 
-                        var notification = new Notification(tit+"  发布了新留言哦~:", {  
+                        let notification = new Notification(tit+"  发布了新留言哦~:", {  
                          dir: "auto",  
                          lang: "hi",  
-                         tag: "testTag",
+                         tag: "msg" + tit,
 			 body: con,
                          icon: "https://avatars3.githubusercontent.com/u/18086072?v=3&s=40",  
                          
                          }) 
                     }else{
-                        console.log("禁止提示")
+                        console.log("浏览器已禁止提示")
                     }
                 })
             }
+            // 回车事件
+            $(document).ready(function(){
+                let upNum=5;
+                $("body").keydown(function(event){ 
+                    if(event.keyCode == "13" ){
+                        if(upNum){
+                            upNum --;
+                            upData()                            
+                        }
+                    }
+                });
+            });
 </script>
-    
-
-</body></html>
+<script src="https://zhangyuhan2016.github.io/public/javascripts/info.js"></script>
+</body>
+</html>
