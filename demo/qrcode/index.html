@@ -220,7 +220,9 @@
     </two>
 </main>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.wilddog.com/sdk/js/2.5.8/wilddog.js"></script>
 <script src="./qrcode.js"></script>
+
 <script>
     /*
     * 2017/8/15 v 0.0.1
@@ -290,7 +292,7 @@
 
     /*上传信息*/
     function setInfo(){
-        const url = ""
+        const url = "https://zhangyuhan2016.github.io/demo/qrcode/qrcode.html"
         /*校验*/
         if(checkInfo() !== true){return false}
         let name = getInput(0),
@@ -316,6 +318,28 @@
         });
     }
 
+</script>
+<script>
+    "use strict"
+    let config = {
+        syncURL: "https://wd6243321162yhgeen.wilddogio.com"
+    };
+    wilddog.initializeApp(config);
+    let ref = wilddog.sync().ref();
+    /*发送*/
+    function setUserInfo(){
+        let name = getInput(0)
+        ref.set({
+                [name]:{status:0}
+        });
+        getUserStatus()
+    }
+    function getUserStatus(){
+        var getRef = wilddog.sync().ref("/"+getInput(0)+"/status");
+        getRef.on("value", function(snapshot) {
+            console.log(snapshot.val());
+        });
+    }
 </script>
 <script src="https://zhangyuhan2016.github.io/public/javascripts/info.js"></script>
 </body>
