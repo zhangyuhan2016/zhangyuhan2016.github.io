@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫码</title>
+</head>
+<body>
+
+
+<script>
+    "use strict"
+    /*获取数据,消灭证据*/
+    function start(){
+        var obj = JSON.parse(decodeURI(window.location.href.split("?data=")[1]))
+        console.info(obj)
+        window.history.pushState("", "page 3", "/扫码登录");
+    }
+    start()
+</script>
+</body>
+</html>
