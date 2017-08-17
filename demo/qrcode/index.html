@@ -45,6 +45,7 @@
             text-indent: 10px;
             align-items: center;
             display: none;
+            transition: all 0.6s;
         }
         qc-icon{
             width: 25px;
@@ -54,6 +55,7 @@
             background-size: 50px;
             background-repeat: no-repeat;
             background-position: -23px 2px;
+            transition: all 0.6s;
         }
         .err{
             color: #bfbfbf;
@@ -187,6 +189,34 @@
         .toggleLable{
             margin-right: -100%;
         }
+        .status-1{
+            display: flex;
+            color: #00aeef;
+        }
+        .status-1 qc-icon{
+            background-position: -23px -68px;
+        }
+        .status-2{
+            display: flex;
+            color:#3fb838;
+        }
+        .status-2 qc-icon{
+            background-position: -23px 2px;
+        }
+        .status-3{
+            display: flex;
+            color: #ffbe00;
+        }
+        .status-3 qc-icon{
+            background-position: -23px -45px;
+        }
+        .status-4{
+            display: flex;
+            color: #f86161;
+        }
+        .status-4 qc-icon{
+            background-position: -23px -22px;
+        }
     </style>
 </head>
 <body>
@@ -222,12 +252,7 @@
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.wilddog.com/sdk/js/2.5.8/wilddog.js"></script>
 <script src="./qrcode.js"></script>
-
 <script>
-    /*
-    * 2017/8/15 v 0.0.1
-    * 仅在chrome测试,其他浏览器未兼容
-    * */
     "use strict"
     /*切换*/
     function toggleLable(){
@@ -241,6 +266,8 @@
             password = getInput(1)
         return checkInfo({name,password})
     }
+    /*当用户持续输入时不进行多次验证*/
+    let timeOut = ''
     /*当输入时取消err-style*/
     $("input").on('keyup',function (event) {
         /*回车事件*/
@@ -252,7 +279,17 @@
         $(this).parent().removeClass("errInput")
         let index = checkInfo()
         if(index === true){
-            showButton(true)
+            /*当用户持续输入时不进行多次验证*/
+            clearTimeout(timeOut)
+            timeOut =  setTimeout(function () {
+                if(checkInfo() === true && checkLocaName(getInput(0))){
+                    showButton(true)
+                }else{
+                    showButton(false)
+                    addStyle(0)
+                    $("input").eq(0).attr("placeholder","这个名字已经被使用了")
+                }
+            },1000)
         }else{
             /*密码未输入时不显示errStyle*/
             if(nowIndex === 0&&index === 1){
@@ -291,18 +328,37 @@
     $("button").on("click",function () {setInfo()})
 
     /*上传信息*/
+    let con = 1
+    let weixinUrl = ""
     function setInfo(){
+        /*销毁当前的计时器*/
+        clearTimeout(timeOut)
+        /*只上传一次*/
+        if(con !== 1){return false}
         const url = "https://zhangyuhan2016.github.io/demo/qrcode/qrcode.html"
-        /*校验*/
+        /*校验输入*/
         if(checkInfo() !== true){return false}
+        if(checkInfo() === true && checkLocaName(getInput(0))){
+        }else{
+            showButton(false)
+            addStyle(0)
+            $("input").eq(0).attr("placeholder","这个名字已经被使用了")
+            return false
+        }
+
+
         let name = getInput(0),
             password = getInput(1),
             obj = {name,password}
         /*更新two数据*/
         $("var").text(name.slice(0,4).padEnd(8, '*'))
+        weixinUrl = url+"?data="+JSON.stringify(obj)
         createQCode(url+"?data="+JSON.stringify(obj))
+        /*发送*/
+        setUserInfo()
         /*切换到two*/
         toggleLable()
+        con = 0
     }
 
 
@@ -317,27 +373,112 @@
             text: url
         });
     }
-
 </script>
 <script>
     "use strict"
+    /*检查用户name是否使用过
+    *
+    * 先检索本地,如果没有就更新本地数据
+    *
+    * */
+
+    /*初始化时间*/
+    let timesArr = []
+    timesArr.push(new Date().getTime()/1000 - 4)
+    /*间隔检测*/
+    function times(){
+        let time = 8
+        timesArr.push(new Date().getTime()/1000)
+        return timesArr.shift() + time < timesArr.toString()
+    }
+    /*更新时间*/
+    /*在本地快速检查*/
+    function checkLocaName (name) {
+        if(localStorage.getItem("userName")){
+            let boolean =  JSON.parse(localStorage.getItem("userName")).includes(name)
+            if(boolean){
+                /*用户在本地存在*/
+                return false
+            }else{
+                /*用户本地无记录*/
+                /*更新本地*/
+                if(times()){
+                    getAllInfo(function () {
+                        /*再次查询*/
+                        checkLocaName(name)
+                    })
+                }else{
+//                    console.log("云端没有这个人")
+                        return true
+                }
+            }
+        }else{
+            /*初次加载页面时*/
+            /*更新本地*/
+            getAllInfo(function () {
+                /*再次查询*/
+                checkLocaName(name)
+            })
+        }
+    }
+    /*获取云端数据更新本地数据*/
+    function getAllInfo(callback){
+        let userName = []
+        let config = {
+            syncURL: "https://wd6243321162yhgeen.wilddogio.com"
+        };
+        wilddog.initializeApp(config);
+        let ref = wilddog.sync();
+
+        ref.on("child_added", function(snapshot) {
+            /*获取存在的userName*/
+            for(let o of Object.keys(snapshot.val())){
+                userName.push(o)
+            }
+            /*更新本地*/
+            localStorage.setItem("userName",JSON.stringify(userName))
+            /*callback*/
+            let a =  (callback && typeof(callback) === "function") && callback();
+        });
+    }
+
+    /*改变状态
+    * 0 未扫码
+    * 1 扫码进入
+    * 2 管理员
+    * 3 其他用户
+    * 4 失败
+    * */
+    function toggleStatus(n) {
+        const str = [
+            "已扫码,校验身份中",
+            "管理员登录",
+            "等待管理员授权",
+            "验证失败"
+        ]
+        $("qc-status").removeClass().addClass("status-"+n).children("span").text(str[n - 1])
+    }
+
+    /*wilddog sync*/
     let config = {
-        syncURL: "https://wd6243321162yhgeen.wilddogio.com"
+        syncURL: "https://wd6243321162yhgeen.wilddogio.com/links"
     };
     wilddog.initializeApp(config);
-    let ref = wilddog.sync().ref();
+    let ref = wilddog.sync("links");
     /*发送*/
     function setUserInfo(){
         let name = getInput(0)
-        ref.set({
-                [name]:{status:0}
+        ref.update({
+            [name]:{status:0}
         });
         getUserStatus()
     }
+    /*接收*/
     function getUserStatus(){
-        var getRef = wilddog.sync().ref("/"+getInput(0)+"/status");
+        let getRef = ref.ref("/"+getInput(0)+"/status");
         getRef.on("value", function(snapshot) {
-            console.log(snapshot.val());
+            let n =parseInt(snapshot.val());
+            toggleStatus(n)
         });
     }
 </script>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>扫码</title>
+    <title>微信扫码登录</title>
     <style>
         body{
             background-color: #e7e8eb;
@@ -35,6 +35,7 @@
             border: 0;
             font-size: 1.2rem;
             color: #03a9f4;
+            margin-top: 51px;
         }
         button[name='login']{
             display: none;
@@ -45,42 +46,76 @@
             height: 300px;
             line-height: 100px;
         }
-        .p-t-50{
+        .wei{
             padding-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type='text'].nameInput{
+            margin-top:112px;
+            border:1px solid #cccccc;
+            background-color: white;
         }
     </style>
 </head>
 <body>
     <div class="close-tip">
-        <h1>3</h1>
-        <h3>操作成功,即将关闭页面</h3>
+        <h1>6</h1>
+        <h3><span name="h-tip">操作成功</span>,即将关闭页面</h3>
     </div>
-    <div class="p-t-50">
+    <div class="wei">
         <h3>您正在扫码登录</h3>
         <input type="text" value="zhangyuhan" disabled="disabled">
         <input type="password" placeholder="请输入您的密码">
-        <br>
         <button name="login">授权登录</button>
         <button name="reset">这不是我</button>
     </div>
 
 
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.wilddog.com/sdk/js/2.5.8/wilddog.js"></script>
 <script>
     "use strict"
-    var flag = true
-    /*获取数据,消灭证据*/
 
+    /*数据*/
+    var config = {
+        syncURL: "https://wd6243321162yhgeen.wilddogio.com/links"
+    };
+    wilddog.initializeApp(config);
+    var ref = wilddog.sync("links");
+    /*更新status*/
+    function setUserInfo(n){
+        var name = info.name
+        ref.update({
+            [name]:{status:parseInt(n)}
+        });
+    }
+
+    var flag = true
+    var info = ""
+    var status = 1
+    /*获取数据,消灭证据*/
     function start(){
         try{
-            var obj = JSON.parse(decodeURI(window.location.href.split("?data=")[1]))
+            info = JSON.parse(decodeURI(window.location.href.split("?data=")[1]))
         }catch (err){
             flag = false
+            setTip("很抱歉,页面出现了一些问题")
+            closeWindows()
+            return false
         }
-        console.info(obj)
-//        window.history.pushState("", "page 3", "/扫码登录");
+        $("input[type='text']").val(info.name === undefined?"zhangyuhan":info.name)
+        window.history.pushState("", "page 3", "/扫码登录");
+        setUserInfo(1)
     }
     start()
+    /*检验用户是否管理员*/
+    function checkPassword(){
+        return $("input[type='password']").val().trim() === info.password
+    }
+
+
     /*输入密码时*/
     $("input[type='password']").on("keyup",function () {
         if($(this).val().trim()){
@@ -93,15 +128,18 @@
     })
     /*管理员授权登录*/
     $("button[name='login']").on('click',function () {
-
+        if(checkPassword()){
+            setTip("验证成功")
+            status = 2
+        }else{
+            setTip("未通过验证")
+            status = 4
+        }
+        closeWindows()
     })
     /*其他用户登录输入用户名*/
     $("button[name='reset']").on('click',function () {
-        $("input[type='text']").css({
-            'margin-top':'50px',
-            'border':'1px solid #cccccc',
-            'background-color': 'white'
-        })
+        $("input[type='text']").addClass("nameInput")
         $(this).text("登录").attr("name","userLogin")
         $("input[type='text']").removeAttr("disabled").focus()
         setTimeout(function () {
@@ -109,6 +147,8 @@
         },1000)
         $(this).off().on('click',function () {
             console.log($("input[type='text']").val())
+            setTip("请等待管理员授权")
+            status = 3
             closeWindows()
         })
     })
@@ -134,14 +174,23 @@
             timeClose(callback)
         },1000)
     }
+    /*通知文字*/
+    function setTip(str){
+        $("span[name='h-tip']").text(str)
+    }
     /*关闭页面*/
     function closeView () {
+        /*chrome仅打开当前页不可用*/
         window.close();
+        /*微信*/
         WeixinJSBridge.call('closeWindow');
     }
     /*操作成功关闭页面*/
     function closeWindows(){
         $(".close-tip").slideDown(500).siblings("div").slideUp(300)
+        /*更新数据*/
+        setUserInfo(status)
+        /*倒计时关闭*/
         timeClose(closeView)
     }
 </script>
