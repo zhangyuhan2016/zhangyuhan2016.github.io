@@ -227,11 +227,11 @@
         <login>
             <my-input>
                 <i class="icon user"></i>
-                <input type="text" placeholder="邮箱/什么都可以啦" autofocus>
+                <input type="text" maxlength="12" placeholder="邮箱/什么都可以啦" autofocus>
             </my-input>
             <my-input>
                 <i class="icon password"></i>
-                <input type="password" placeholder="密码/当然不是真的">
+                <input type="password" maxlength="8" placeholder="密码/当然不是真的">
             </my-input>
             <go>
                 <button> > </button>
@@ -268,6 +268,17 @@
     }
     /*当用户持续输入时不进行多次验证*/
     let timeOut = ''
+    /*按钮控制*/
+    function toggleButton(boolean){
+        console.log("to1",boolean)
+        if(boolean){
+            showButton(true)
+        }else{
+            showButton(false)
+            addStyle(0)
+            $("input").eq(0).attr("placeholder","这个名字已经被使用了")
+        }
+    }
     /*当输入时取消err-style*/
     $("input").on('keyup',function (event) {
         /*回车事件*/
@@ -282,15 +293,15 @@
             /*当用户持续输入时不进行多次验证*/
             clearTimeout(timeOut)
             timeOut =  setTimeout(function () {
-                if(checkInfo() === true && checkLocaName(getInput(0))){
-                    showButton(true)
-                }else{
-                    showButton(false)
-                    addStyle(0)
-                    $("input").eq(0).attr("placeholder","这个名字已经被使用了")
+                if(checkInfo() === true){
+                    checkLocaName(getInput(0),toggleButton)
                 }
             },1000)
         }else{
+            /*通过tab切换到password时*/
+            if(event.which === 9 && index === 1){
+                return false
+            }
             /*密码未输入时不显示errStyle*/
             if(nowIndex === 0&&index === 1){
 
@@ -335,18 +346,25 @@
         clearTimeout(timeOut)
         /*只上传一次*/
         if(con !== 1){return false}
-        const url = "https://zhangyuhan2016.github.io/demo/qrcode/qrcode.html"
-        /*校验输入*/
-        if(checkInfo() !== true){return false}
-        if(checkInfo() === true && checkLocaName(getInput(0))){
+        /*校验输入
+        *
+        * 通过回调改变状态
+        * */
+        if(checkInfo() === true){
+            checkLocaName(getInput(0),function (b) {
+                toggleButton(b)
+                if(b === true){
+                    goTwo()
+                }
+            })
         }else{
-            showButton(false)
-            addStyle(0)
-            $("input").eq(0).attr("placeholder","这个名字已经被使用了")
             return false
         }
-
-
+    }
+    /*切换到视图2*/
+    function goTwo(){
+        con = 0
+        const url = "https://zhangyuhan2016.github.io/demo/qrcode/qrcode.html"
         let name = getInput(0),
             password = getInput(1),
             obj = {name,password}
@@ -358,7 +376,6 @@
         setUserInfo()
         /*切换到two*/
         toggleLable()
-        con = 0
     }
 
 
@@ -393,23 +410,22 @@
     }
     /*更新时间*/
     /*在本地快速检查*/
-    function checkLocaName (name) {
+    function checkLocaName (name,callback) {
         if(localStorage.getItem("userName")){
             let boolean =  JSON.parse(localStorage.getItem("userName")).includes(name)
             if(boolean){
                 /*用户在本地存在*/
-                return false
+                let a =  (callback && typeof(callback) === "function") && callback(false);
             }else{
                 /*用户本地无记录*/
                 /*更新本地*/
                 if(times()){
                     getAllInfo(function () {
                         /*再次查询*/
-                        checkLocaName(name)
+                        checkLocaName(name,callback)
                     })
                 }else{
-//                    console.log("云端没有这个人")
-                        return true
+                    let b = (callback && typeof(callback) === "function") && callback(true)
                 }
             }
         }else{
@@ -417,7 +433,7 @@
             /*更新本地*/
             getAllInfo(function () {
                 /*再次查询*/
-                checkLocaName(name)
+                checkLocaName(name,callback)
             })
         }
     }
