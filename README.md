@@ -6,7 +6,7 @@
   * **demo** 
     * **wilddog**
         * [留言墙](https://zhangyuhan2016.github.io/views/mesWall.html)
-        * [扫码登录](https://zhangyuhan2016.github.io/demo/qrcode/index.html)
+        * [扫码登录](./demo/qrcode/REMADE.md)
     * **js**
         * [扫雷](https://zhangyuhan2016.github.io/views/mine.html)
         * [打字](https://zhangyuhan2016.github.io/views/gameType.html)

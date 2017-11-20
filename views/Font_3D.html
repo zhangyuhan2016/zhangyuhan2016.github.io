@@ -7,35 +7,38 @@
 
     <link rel="stylesheet" href="../public/stylesheets/Font_3D.css">
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
-        #text{
+
+        #text {
             width: 130px;
             height: 30px;
             font-size: 30px;
             z-index: 9;
         }
-        .center{
+
+        .center {
             /*该类用于实现居中*/
-            top:0;
+            top: 0;
             right: 0;
             bottom: 0;
             left: 0;
             margin: auto;
             position: absolute;
         }
-        .text-3d::after{
+
+        .text-3d::after {
             right: 0;
-            top:0;
+            top: 0;
         }
+
         @media screen and (max-width: 700px) {
 
-           #text{
-               display: none;
-           }
-
+            #text {
+                display: none;
+            }
 
         }
     </style>
@@ -57,17 +60,18 @@
 
 <script>
 
-    $('#text').keyup(function () {
-        $('#show').html('');
-        var font=$(this).val();
-        for(var i=0;i<font.length;i++) {
-            print(font.substring(i, (i+1)))
-        }
-    })
-    function print(font) {
-        var text='<span class="text-3d" value='+ font+'>'+font+'</span>';
-        $('#show').append(text);
+  $('#text').keyup(function () {
+    $('#show').html('')
+    var font = $(this).val()
+    for (var i = 0; i < font.length; i++) {
+      print(font.substring(i, (i + 1)))
     }
+  })
+
+  function print (font) {
+    var text = '<span class="text-3d" value=' + font + '>' + font + '</span>'
+    $('#show').append(text)
+  }
 </script>
 
 </body>

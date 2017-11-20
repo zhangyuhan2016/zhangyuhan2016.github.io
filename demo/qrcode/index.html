@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>扫码Demo</title>
     <style>
-        body{
+        body {
             background-color: #e7e8eb;
         }
 
-        qc-title{
+        qc-title {
             display: block;
             background-color: #f4f5f9;
             line-height: 52px;
@@ -17,7 +17,8 @@
             padding: 0 30px;
 
         }
-        qc-content{
+
+        qc-content {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -26,28 +27,33 @@
             padding-top: 100px;
             padding-bottom: 50px;
         }
-        qc-img{
+
+        qc-img {
             width: 280px;
             height: 280px;
             margin-top: 20px;
             margin-bottom: 20px;
         }
-        qc-tip{
+
+        qc-tip {
             color: #222;
             font-size: 14px;
             padding: 5px 0;
         }
-        qc-tip var{
+
+        qc-tip var {
             font-style: normal;
         }
-        qc-status{
+
+        qc-status {
             display: flex;
             text-indent: 10px;
             align-items: center;
             display: none;
             transition: all 0.6s;
         }
-        qc-icon{
+
+        qc-icon {
             width: 25px;
             height: 25px;
             display: inline-block;
@@ -57,15 +63,17 @@
             background-position: -23px 2px;
             transition: all 0.6s;
         }
-        .err{
+
+        .err {
             color: #bfbfbf;
         }
-        .err qc-icon{
+
+        .err qc-icon {
             background-position: -25px 0px;
         }
 
         /**/
-        first{
+        first {
             width: 1200px;
             min-height: 600px;
             margin: 0 auto;
@@ -74,12 +82,13 @@
             align-items: center;
             justify-content: center;
         }
-        tip{
+
+        tip {
             font-size: 24px;
             padding: 20px;
         }
 
-        login{
+        login {
             width: 100%;
             display: flex;
             flex-direction: row;
@@ -89,20 +98,21 @@
             padding-left: 50px;
         }
 
-        my-input{
+        my-input {
             border: 1px solid #e7e7eb;
             background-color: white;
             display: flex;
             align-items: center;
             margin: 3px;
         }
-        my-input input{
+
+        my-input input {
             border: 0;
             outline: 0;
             padding: 11px 0;
         }
 
-        .icon{
+        .icon {
             background-image: url('./icons.png');
             background-repeat: no-repeat;
             background-size: 100px;
@@ -111,16 +121,20 @@
             display: inline-block;
             margin: 0 10px;
         }
-        .user{
+
+        .user {
             background-position: 2px 0px;
         }
-        .password{
+
+        .password {
             background-position: 2px -20px;
         }
-        go{
+
+        go {
             margin-left: -3px;
         }
-        go button{
+
+        go button {
             margin-left: -100%;
             transition: all 2s;
             width: 50px;
@@ -130,38 +144,43 @@
             border: 0;
             color: white;
         }
-        .errInput{
+
+        .errInput {
             transition: all 0.6s;
-            animation: errInput 0.6s infinite alternate,errColor 0.7s infinite alternate cubic-bezier(0.47, 0, 0.75, 0.72);
+            animation: errInput 0.6s infinite alternate, errColor 0.7s infinite alternate cubic-bezier(0.47, 0, 0.75, 0.72);
         }
+
         @keyframes errColor {
-            0%{
+            0% {
                 box-shadow: 0px 0px 3px 2px rgb(232, 226, 226);
             }
-            100%{
+            100% {
                 box-shadow: 0px 0px 3px 2px rgba(241, 91, 91, 0.82);
             }
         }
+
         @keyframes errInput {
-            0%{
+            0% {
                 transform: rotate(1deg);
             }
-            100%{
+            100% {
                 transform: rotate(-1deg);
             }
         }
-        .goButton{
+
+        .goButton {
             margin-left: 6px;
             background-color: #7bcd3d;
             color: white;
         }
 
         /**/
-        ::-webkit-input-placeholder {/* WebKit browsers */
-            color:    #999;
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            color: #999;
         }
+
         /**/
-        main{
+        main {
             width: 1200px;
             margin: 0 auto;
             margin-top: 8%;
@@ -170,51 +189,63 @@
             flex-direction: row-reverse;
             overflow-x: hidden;
         }
-        .showBox{
+
+        .showBox {
             width: 1200px;
             display: block;
             min-height: 600px;
             flex-shrink: 0;
             transition: all 0.65s;
         }
-        .one{
+
+        .one {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
-        .two{
+
+        .two {
             /*display: none;*/
         }
-        .toggleLable{
+
+        .toggleLable {
             margin-right: -100%;
         }
-        .status-1{
+
+        .status-1 {
             display: flex;
             color: #00aeef;
         }
-        .status-1 qc-icon{
+
+        .status-1 qc-icon {
             background-position: -23px -68px;
         }
-        .status-2{
+
+        .status-2 {
             display: flex;
-            color:#3fb838;
+            color: #3fb838;
         }
-        .status-2 qc-icon{
+
+        .status-2 qc-icon {
             background-position: -23px 2px;
         }
-        .status-3{
+
+        .status-3 {
             display: flex;
             color: #ffbe00;
         }
-        .status-3 qc-icon{
+
+        .status-3 qc-icon {
             background-position: -23px -45px;
         }
-        .status-4{
+
+        .status-4 {
             display: flex;
             color: #f86161;
         }
-        .status-4 qc-icon{
+
+        .status-4 qc-icon {
             background-position: -23px -22px;
         }
     </style>
@@ -234,7 +265,7 @@
                 <input type="password" maxlength="8" placeholder="密码/当然不是真的">
             </my-input>
             <go>
-                <button> > </button>
+                <button> ></button>
             </go>
         </login>
     </one>
@@ -243,7 +274,9 @@
         <qc-content>
             <qc-tip>为保障帐号安全，请扫码验证身份</qc-tip>
             <qc-img></qc-img>
-            <qc-status><qc-icon></qc-icon><span>通过</span></qc-status>
+            <qc-status>
+                <qc-icon></qc-icon>
+                <span>通过</span></qc-status>
             <qc-tip>管理员与运营者：可直接扫码登录</qc-tip>
             <qc-tip>其他用户：扫码后需管理员(<var>zhang****</var>)验证登录</qc-tip>
         </qc-content>
@@ -253,249 +286,264 @@
 <script src="https://cdn.wilddog.com/sdk/js/2.5.8/wilddog.js"></script>
 <script src="./qrcode.js"></script>
 <script>
-    "use strict"
-    /*切换*/
-    function toggleLable(){
-        $("one").toggleClass("toggleLable")
-    }
+  'use strict'
 
-    /*one*/
-    /*获取信息*/
-    function getInfo () {
-        let name = getInput(0),
-            password = getInput(1)
-        return checkInfo({name,password})
-    }
-    /*当用户持续输入时不进行多次验证*/
-    let timeOut = ''
-    /*按钮控制*/
-    function toggleButton(boolean){
-        if(boolean){
-            showButton(true)
-        }else{
-            showButton(false)
-            addStyle(0)
-            $("input").eq(0).attr("placeholder","这个名字已经被使用了")
-        }
-    }
-    /*当输入时取消err-style*/
-    $("input").on('keyup',function (event) {
-        /*回车事件*/
-        if(event.which === 13){
-            return setInfo()
-        }
-        /*样式控制及显示按钮*/
-        let nowIndex = $(this).index("login input")
-        $(this).parent().removeClass("errInput")
-        let index = checkInfo()
-        if(index === true){
-            /*当用户持续输入时不进行多次验证*/
-            clearTimeout(timeOut)
-            timeOut =  setTimeout(function () {
-                if(checkInfo() === true){
-                    checkLocaName(getInput(0),toggleButton)
-                }
-            },1000)
-        }else{
-            /*通过tab切换到password时*/
-            if(event.which === 9 && index === 1){
-                return false
-            }
-            /*密码未输入时不显示errStyle*/
-            if(nowIndex === 0&&index === 1){
+  /*切换*/
+  function toggleLable () {
+    $('one').toggleClass('toggleLable')
+  }
 
-            }else{
-                addStyle(index)
-            }
-            showButton(false)
+  /*one*/
+  /*获取信息*/
+  function getInfo () {
+    let name = getInput(0),
+      password = getInput(1)
+    return checkInfo({name, password})
+  }
+
+  /*当用户持续输入时不进行多次验证*/
+  let timeOut = ''
+
+  /*按钮控制*/
+  function toggleButton (boolean) {
+    if (boolean) {
+      showButton(true)
+    } else {
+      showButton(false)
+      addStyle(0)
+      $('input').eq(0).attr('placeholder', '这个名字已经被使用了')
+    }
+  }
+
+  /*当输入时取消err-style*/
+  $('input').on('keyup', function (event) {
+    /*回车事件*/
+    if (event.which === 13) {
+      return setInfo()
+    }
+    /*样式控制及显示按钮*/
+    let nowIndex = $(this).index('login input')
+    $(this).parent().removeClass('errInput')
+    let index = checkInfo()
+    if (index === true) {
+      /*当用户持续输入时不进行多次验证*/
+      clearTimeout(timeOut)
+      timeOut = setTimeout(function () {
+        if (checkInfo() === true) {
+          checkLocaName(getInput(0), toggleButton)
         }
+      }, 1000)
+    } else {
+      /*通过tab切换到password时*/
+      if (event.which === 9 && index === 1) {
+        return false
+      }
+      /*密码未输入时不显示errStyle*/
+      if (nowIndex === 0 && index === 1) {
+
+      } else {
+        addStyle(index)
+      }
+      showButton(false)
+    }
+  })
+
+  /*显示按钮*/
+  function showButton (boolean) {
+    if (boolean) {
+      $('button').addClass('goButton')
+    } else {
+      $('button').removeClass('goButton')
+    }
+  }
+
+  /*获取input*/
+  function getInput (n) {
+    return $('input').eq(n).val().trim()
+  }
+
+  /*添加errStyle*/
+  function addStyle (n) {
+    /*添加style*/
+    $('input').eq(n).val('').parent().addClass('errInput')
+  }
+
+  /*验证信息*/
+  function checkInfo () {
+    let name = getInput(0),
+      password = getInput(1)
+    /*name不存在返回0,password不存在返回1,都存在返回true*/
+    return name ? password ? true : 1 : 0
+  }
+
+  /*onclick*/
+  $('button').on('click', function () {setInfo()})
+
+  /*上传信息*/
+  let con = 1
+  let weixinUrl = ''
+
+  function setInfo () {
+    /*销毁当前的计时器*/
+    clearTimeout(timeOut)
+    /*只上传一次*/
+    if (con !== 1) {return false}
+    /*校验输入
+    *
+    * 通过回调改变状态
+    * */
+    if (checkInfo() === true) {
+      checkLocaName(getInput(0), function (b) {
+        toggleButton(b)
+        if (b === true) {
+          goTwo()
+        }
+      })
+    } else {
+      return false
+    }
+  }
+
+  /*切换到视图2*/
+  function goTwo () {
+    con = 0
+    const url = 'https://zhangyuhan2016.github.io/demo/qrcode/qrcode.html'
+    let name = getInput(0),
+      password = getInput(1),
+      obj = {name, password}
+    /*更新two数据*/
+    $('var').text(name.slice(0, 4).padEnd(8, '*'))
+    weixinUrl = url + '?data=' + JSON.stringify(obj)
+    createQCode(url + '?data=' + JSON.stringify(obj))
+    /*发送*/
+    setUserInfo()
+    /*切换到two*/
+    toggleLable()
+  }
+
+  /*two*/
+  /*调用库创建二维码*/
+  function createQCode (url) {
+    const selector = 'qc-img'
+    $(selector).innerHTML = ''
+    $(selector).qrcode({
+      width: 280,
+      height: 280,
+      text: url
     })
-    /*显示按钮*/
-    function showButton(boolean){
-        if(boolean){
-            $("button").addClass("goButton")
-        }else{
-            $("button").removeClass("goButton")
-        }
-    }
-    /*获取input*/
-    function getInput(n){
-        return $("input").eq(n).val().trim()
-    }
-    /*添加errStyle*/
-    function addStyle(n){
-        /*添加style*/
-        $("input").eq(n).val("").parent().addClass("errInput")
-    }
-    /*验证信息*/
-    function checkInfo(){
-        let name = getInput(0),
-        password = getInput(1)
-        /*name不存在返回0,password不存在返回1,都存在返回true*/
-        return name?password?true:1:0
-    }
-    /*onclick*/
-    $("button").on("click",function () {setInfo()})
-
-    /*上传信息*/
-    let con = 1
-    let weixinUrl = ""
-    function setInfo(){
-        /*销毁当前的计时器*/
-        clearTimeout(timeOut)
-        /*只上传一次*/
-        if(con !== 1){return false}
-        /*校验输入
-        *
-        * 通过回调改变状态
-        * */
-        if(checkInfo() === true){
-            checkLocaName(getInput(0),function (b) {
-                toggleButton(b)
-                if(b === true){
-                    goTwo()
-                }
-            })
-        }else{
-            return false
-        }
-    }
-    /*切换到视图2*/
-    function goTwo(){
-        con = 0
-        const url = "https://zhangyuhan2016.github.io/demo/qrcode/qrcode.html"
-        let name = getInput(0),
-            password = getInput(1),
-            obj = {name,password}
-        /*更新two数据*/
-        $("var").text(name.slice(0,4).padEnd(8, '*'))
-        weixinUrl = url+"?data="+JSON.stringify(obj)
-        createQCode(url+"?data="+JSON.stringify(obj))
-        /*发送*/
-        setUserInfo()
-        /*切换到two*/
-        toggleLable()
-    }
-
-
-    /*two*/
-    /*调用库创建二维码*/
-    function createQCode(url){
-        const selector = 'qc-img'
-        $(selector).innerHTML = ''
-        $(selector).qrcode({
-            width:280,
-            height:280,
-            text: url
-        });
-    }
+  }
 </script>
 <script>
-    "use strict"
-    /*检查用户name是否使用过
-    *
-    * 先检索本地,如果没有就更新本地数据
-    *
-    * */
+  'use strict'
+  /*检查用户name是否使用过
+  *
+  * 先检索本地,如果没有就更新本地数据
+  *
+  * */
 
-    /*初始化时间*/
-    let timesArr = []
-    timesArr.push(new Date().getTime()/1000 - 4)
-    /*间隔检测*/
-    function times(){
-        let time = 8
-        timesArr.push(new Date().getTime()/1000)
-        return timesArr.shift() + time < timesArr.toString()
-    }
-    /*更新时间*/
-    /*在本地快速检查*/
-    function checkLocaName (name,callback) {
-        if(localStorage.getItem("userName")){
-            let boolean =  JSON.parse(localStorage.getItem("userName")).includes(name)
-            if(boolean){
-                /*用户在本地存在*/
-                let a =  (callback && typeof(callback) === "function") && callback(false);
-            }else{
-                /*用户本地无记录*/
-                /*更新本地*/
-                if(times()){
-                    getAllInfo(function () {
-                        /*再次查询*/
-                        checkLocaName(name,callback)
-                    })
-                }else{
-                    let b = (callback && typeof(callback) === "function") && callback(true)
-                }
-            }
-        }else{
-            /*初次加载页面时*/
-            /*更新本地*/
-            getAllInfo(function () {
-                /*再次查询*/
-                checkLocaName(name,callback)
-            })
+  /*初始化时间*/
+  let timesArr = []
+  timesArr.push(new Date().getTime() / 1000 - 4)
+
+  /*间隔检测*/
+  function times () {
+    let time = 8
+    timesArr.push(new Date().getTime() / 1000)
+    return timesArr.shift() + time < timesArr.toString()
+  }
+
+  /*更新时间*/
+  /*在本地快速检查*/
+  function checkLocaName (name, callback) {
+    if (localStorage.getItem('userName')) {
+      let boolean = JSON.parse(localStorage.getItem('userName')).includes(name)
+      if (boolean) {
+        /*用户在本地存在*/
+        let a = (callback && typeof(callback) === 'function') && callback(false)
+      } else {
+        /*用户本地无记录*/
+        /*更新本地*/
+        if (times()) {
+          getAllInfo(function () {
+            /*再次查询*/
+            checkLocaName(name, callback)
+          })
+        } else {
+          let b = (callback && typeof(callback) === 'function') && callback(true)
         }
+      }
+    } else {
+      /*初次加载页面时*/
+      /*更新本地*/
+      getAllInfo(function () {
+        /*再次查询*/
+        checkLocaName(name, callback)
+      })
     }
-    /*获取云端数据更新本地数据*/
-    function getAllInfo(callback){
-        let userName = []
-        let config = {
-            syncURL: "https://wd6243321162yhgeen.wilddogio.com"
-        };
-        wilddog.initializeApp(config);
-        let ref = wilddog.sync();
+  }
 
-        ref.on("child_added", function(snapshot) {
-            /*获取存在的userName*/
-            for(let o of Object.keys(snapshot.val())){
-                userName.push(o)
-            }
-            /*更新本地*/
-            localStorage.setItem("userName",JSON.stringify(userName))
-            /*callback*/
-            let a =  (callback && typeof(callback) === "function") && callback();
-        });
-    }
-
-    /*改变状态
-    * 0 未扫码
-    * 1 扫码进入
-    * 2 管理员
-    * 3 其他用户
-    * 4 失败
-    * */
-    function toggleStatus(n) {
-        const str = [
-            "已扫码,校验身份中",
-            "管理员登录",
-            "等待管理员授权",
-            "验证失败"
-        ]
-        $("qc-status").removeClass().addClass("status-"+n).children("span").text(str[n - 1])
-    }
-
-    /*wilddog sync*/
+  /*获取云端数据更新本地数据*/
+  function getAllInfo (callback) {
+    let userName = []
     let config = {
-        syncURL: "https://wd6243321162yhgeen.wilddogio.com/links"
-    };
-    wilddog.initializeApp(config);
-    let ref = wilddog.sync("links");
-    /*发送*/
-    function setUserInfo(){
-        let name = getInput(0)
-        ref.update({
-            [name]:{status:0}
-        });
-        getUserStatus()
+      syncURL: 'https://wd6243321162yhgeen.wilddogio.com'
     }
-    /*接收*/
-    function getUserStatus(){
-        let getRef = ref.ref("/"+getInput(0)+"/status");
-        getRef.on("value", function(snapshot) {
-            let n =parseInt(snapshot.val());
-            toggleStatus(n)
-        });
-    }
+    wilddog.initializeApp(config)
+    let ref = wilddog.sync()
+
+    ref.on('child_added', function (snapshot) {
+      /*获取存在的userName*/
+      for (let o of Object.keys(snapshot.val())) {
+        userName.push(o)
+      }
+      /*更新本地*/
+      localStorage.setItem('userName', JSON.stringify(userName))
+      /*callback*/
+      let a = (callback && typeof(callback) === 'function') && callback()
+    })
+  }
+
+  /*改变状态
+  * 0 未扫码
+  * 1 扫码进入
+  * 2 管理员
+  * 3 其他用户
+  * 4 失败
+  * */
+  function toggleStatus (n) {
+    const str = [
+      '已扫码,校验身份中',
+      '管理员登录',
+      '等待管理员授权',
+      '验证失败'
+    ]
+    $('qc-status').removeClass().addClass('status-' + n).children('span').text(str[n - 1])
+  }
+
+  /*wilddog sync*/
+  let config = {
+    syncURL: 'https://wd6243321162yhgeen.wilddogio.com/links'
+  }
+  wilddog.initializeApp(config)
+  let ref = wilddog.sync('links')
+
+  /*发送*/
+  function setUserInfo () {
+    let name = getInput(0)
+    ref.update({
+      [name]: {status: 0}
+    })
+    getUserStatus()
+  }
+
+  /*接收*/
+  function getUserStatus () {
+    let getRef = ref.ref('/' + getInput(0) + '/status')
+    getRef.on('value', function (snapshot) {
+      let n = parseInt(snapshot.val())
+      toggleStatus(n)
+    })
+  }
 </script>
 <script src="https://zhangyuhan2016.github.io/public/javascripts/info.js"></script>
 </body>

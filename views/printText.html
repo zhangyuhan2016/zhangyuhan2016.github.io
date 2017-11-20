@@ -1,60 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>打字效果</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>打字效果</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" type="text/css" href="../public/stylesheets/printText.css">
+    <link rel="stylesheet" type="text/css" href="../public/stylesheets/printText.css">
 
-<style>
-body{
-  background: #ab8804;
-  word-wrap: break-word; 
-    word-break: normal; 
-}
-@media screen and (max-width: 700px) {
-  
-   .print-text{
-    font-size: 2.5em !important;
-  }
-  .print-text::after {
-    margin-top: 0.15em !important;
-    height: 1em !important;
-}
+    <style>
+        body {
+            background: #ab8804;
+            word-wrap: break-word;
+            word-break: normal;
+        }
 
-  
-}
-</style>
+        @media screen and (max-width: 700px) {
+
+            .print-text {
+                font-size: 2.5em !important;
+            }
+
+            .print-text::after {
+                margin-top: 0.15em !important;
+                height: 1em !important;
+            }
+
+        }
+    </style>
 </head>
 
 <body>
 
 
- <span class="print-text">我的王国有太多的鸟飞过</span>
-
+<span class="print-text">我的王国有太多的鸟飞过</span>
 
 
 <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
 <script type="text/javascript" src="../public/javascripts/printText.js"></script>
 <script>
- 
 
-    let arr=[
-        "走出城的东门",
-        "尽管那里有一千个美丽的女子走过",
-        "我也能听出你的脚步声",
-        "因为其他九百九十九个人的脚步都是踏在地上",
-        "而你的脚步是踩在我的心里",
-        "To see the world",
-        "things dangerous to come to",
-        "to see behind walls",
-        "to draw closer",
-        "to find each other and to feel",
-        "That is the purpose of life"
-    ];
-    aText.start('.print-text',arr);
-    console.log("%c出其东门\n有女如云\n虽则如云\n匪我思存\n开拓视野，冲破艰险，洞悉所有，贴近生活，找到彼此，感受真情，这就是人生的目的","color:#fff;background:black;font-size:2em;");
+
+  let arr = [
+    '走出城的东门',
+    '尽管那里有一千个美丽的女子走过',
+    '我也能听出你的脚步声',
+    '因为其他九百九十九个人的脚步都是踏在地上',
+    '而你的脚步是踩在我的心里',
+    'To see the world',
+    'things dangerous to come to',
+    'to see behind walls',
+    'to draw closer',
+    'to find each other and to feel',
+    'That is the purpose of life'
+  ]
+  aText.start('.print-text', arr)
+  console.log('%c出其东门\n有女如云\n虽则如云\n匪我思存\n开拓视野，冲破艰险，洞悉所有，贴近生活，找到彼此，感受真情，这就是人生的目的', 'color:#fff;background:black;font-size:2em;')
 
 
 </script>

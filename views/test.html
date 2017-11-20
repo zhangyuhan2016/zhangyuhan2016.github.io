@@ -1,189 +1,205 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset=utf-8>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>追书Demo</title>
-  <!-- Bootstrap -->
-  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-  
-     .book{
-      display: flex;
-      width: 100%;
-      justify-content: flex-start;
-      border-bottom: 1px solid #fff; 
-    }
-    .bookFace{
-      height: 70px;
-      margin-right: 5px;
-    }
-    .bookInfo{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-    }
-    .bookName{
-      font-size: 1.5em;
-    }
-    .bookUp{
-      font-size: 0.8em;
-      overflow: hidden;
-      text-overflow:ellipsis;
-      white-space: nowrap;
-      width: auto;
-    }
-  </style>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>追书Demo</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        .book {
+            display: flex;
+            width: 100%;
+            justify-content: flex-start;
+            border-bottom: 1px solid #fff;
+        }
+
+        .bookFace {
+            height: 70px;
+            margin-right: 5px;
+        }
+
+        .bookInfo {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .bookName {
+            font-size: 1.5em;
+        }
+
+        .bookUp {
+            font-size: 0.8em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: auto;
+        }
+    </style>
 </head>
 <body>
 
 <div id="app" class="container-fluid">
-  <!-- nav -->
-  <nav class="navbar navbar-default row">
-      <div class="navbar-header col-xs-6">
-        <a class="navbar-brand" href="#">追书神器</a>
-      </div>
-      <ul class="nav navbar-nav navbar-right col-xs-6">
-        <li class="col-xs-3"><a href="#"><span class="glyphicon  glyphicon-search" aria-hidden="true"></span></a></li>
-        <li class="dropdown col-xs-3 pull-right">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span> </a>
-          <ul class="dropdown-menu">
-            <li><a href="#"><span class="glyphicon glyphicon-user" ></span><span>&nbsp;&nbsp;昵称</span></a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#"><span class="glyphicon glyphicon-bell" ></span><span>&nbsp;&nbsp;我的消息</span></a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#"><span class="glyphicon glyphicon-cloud-upload" ></span><span>&nbsp;&nbsp;同步书架</span></a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#"><span class="glyphicon glyphicon-info-sign" ></span><span>&nbsp;&nbsp;意见反馈</span></a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#"><span class="glyphicon glyphicon-eye-open" ></span><span>&nbsp;&nbsp;夜间模式</span></a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#"><span class="glyphicon glyphicon-wrench" ></span><span>&nbsp;&nbsp;设置</span></a></li>
-          </ul>
-        </li>
-      </ul>
-  </nav>
-
-  <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active col-xs-4 col-sm-4"><a href="#chaseBook" aria-controls="chaseBook" role="tab" data-toggle="tab">追书</a></li>
-    <li role="presentation" class="col-xs-4 col-sm-4"><a href="#community" aria-controls="community" role="tab" data-toggle="tab">社区</a></li>
-    <li role="presentation" class="col-xs-4 col-sm-4"><a href="#find" aria-controls="find" role="tab" data-toggle="tab">发现</a></li>
-  </ul>
-
-  <!-- Tab panes -->
-  <div class="tab-content well">
-    <div role="tabpanel" class="tab-pane active" id="chaseBook">
-      <div class="book">
-        <img class="bookFace" src="face.jpg" alt="...">
-        <div class="bookInfo">
-          <h4 class="bookName">书名</h4>
-          <h6 class="bookUp">最后更新</h6>
+    <!-- nav -->
+    <nav class="navbar navbar-default row">
+        <div class="navbar-header col-xs-6">
+            <a class="navbar-brand" href="#">追书神器</a>
         </div>
-      </div>
+        <ul class="nav navbar-nav navbar-right col-xs-6">
+            <li class="col-xs-3"><a href="#"><span class="glyphicon  glyphicon-search" aria-hidden="true"></span></a>
+            </li>
+            <li class="dropdown col-xs-3 pull-right">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false"><span class="glyphicon glyphicon-option-vertical" aria-hidden="true"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span><span>&nbsp;&nbsp;昵称</span></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-bell"></span><span>&nbsp;&nbsp;我的消息</span></a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-cloud-upload"></span><span>&nbsp;&nbsp;同步书架</span></a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span><span>&nbsp;&nbsp;意见反馈</span></a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-eye-open"></span><span>&nbsp;&nbsp;夜间模式</span></a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-wrench"></span><span>&nbsp;&nbsp;设置</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
 
-      <div class="book">
-        <img class="bookFace" src="face.jpg" alt="...">
-        <div class="bookInfo">
-          <h4 class="bookName">书名</h4>
-          <h6 class="bookUp">最后更新</h6>
-        </div>
-      </div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active col-xs-4 col-sm-4"><a href="#chaseBook" aria-controls="chaseBook"
+                                                                    role="tab" data-toggle="tab">追书</a></li>
+        <li role="presentation" class="col-xs-4 col-sm-4"><a href="#community" aria-controls="community" role="tab"
+                                                             data-toggle="tab">社区</a></li>
+        <li role="presentation" class="col-xs-4 col-sm-4"><a href="#find" aria-controls="find" role="tab"
+                                                             data-toggle="tab">发现</a></li>
+    </ul>
 
-      <div class="book">
-        <img class="bookFace" src="face.jpg" alt="...">
-        <div class="bookInfo">
-          <h4 class="bookName">书名</h4>
-          <h6 class="bookUp">最后更新</h6>
-        </div>
-      </div>
+    <!-- Tab panes -->
+    <div class="tab-content well">
+        <div role="tabpanel" class="tab-pane active" id="chaseBook">
+            <div class="book">
+                <img class="bookFace" src="face.jpg" alt="...">
+                <div class="bookInfo">
+                    <h4 class="bookName">书名</h4>
+                    <h6 class="bookUp">最后更新</h6>
+                </div>
+            </div>
 
-      <div class="book">
-        <img class="bookFace" src="face.jpg" alt="...">
-        <div class="bookInfo">
-          <h4 class="bookName">书名</h4>
-          <h6 class="bookUp">最后更新</h6>
+            <div class="book">
+                <img class="bookFace" src="face.jpg" alt="...">
+                <div class="bookInfo">
+                    <h4 class="bookName">书名</h4>
+                    <h6 class="bookUp">最后更新</h6>
+                </div>
+            </div>
+
+            <div class="book">
+                <img class="bookFace" src="face.jpg" alt="...">
+                <div class="bookInfo">
+                    <h4 class="bookName">书名</h4>
+                    <h6 class="bookUp">最后更新</h6>
+                </div>
+            </div>
+
+            <div class="book">
+                <img class="bookFace" src="face.jpg" alt="...">
+                <div class="bookInfo">
+                    <h4 class="bookName">书名</h4>
+                    <h6 class="bookUp">最后更新</h6>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="community">
+        <div role="tabpanel" class="tab-pane" id="community">
             <div class="list-group">
-             <li class="list-group-item disabled">公共社区</li>
-              <button type="button" class="list-group-item">综合讨论区</button>
-              <button type="button" class="list-group-item">书评区</button>
-              <button type="button" class="list-group-item">书荒互助区</button>
-              <button type="button" class="list-group-item">女生区</button>
+                <li class="list-group-item disabled">公共社区</li>
+                <button type="button" class="list-group-item">综合讨论区</button>
+                <button type="button" class="list-group-item">书评区</button>
+                <button type="button" class="list-group-item">书荒互助区</button>
+                <button type="button" class="list-group-item">女生区</button>
             </div>
 
-          <ul class="list-group">
-            <li class="list-group-item disabled">我的社区</li>
-            <li class="list-group-item">
-              <span class="badge">14</span>
-              未来天王
-            </li>
-            <li class="list-group-item">
-              <span class="pull-right badge">14</span>
-              原始战纪
-            </li>
-            <li class="list-group-item">
-              <span class="badge">14</span>
-              雪中悍刀行
-            </li>
-            <li class="list-group-item">
-              <span class="badge">14</span>
-              逍遥游
-            </li>
-            <li class="list-group-item">
-              <span class="badge">14</span>
-              唐朝小闲人
-            </li>
-          </ul>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="find">
-      <div class="list-group">
-              <button type="button" class="list-group-item"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;排行榜
-<span class="glyphicon glyphicon-chevron-right pull-right"></span>
-              </button>
-              <button type="button" class="list-group-item">
-              <span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;主题书单<span class="glyphicon glyphicon-chevron-right pull-right"></span></button>
-              <button type="button" class="list-group-item"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;分类<span class="glyphicon glyphicon-chevron-right pull-right"></span></button>
-              <button type="button" class="list-group-item"><span class="glyphicon  glyphicon-random"></span>&nbsp;&nbsp;随机看书<span class="glyphicon glyphicon-chevron-right pull-right"></span></button>
+            <ul class="list-group">
+                <li class="list-group-item disabled">我的社区</li>
+                <li class="list-group-item">
+                    <span class="badge">14</span>
+                    未来天王
+                </li>
+                <li class="list-group-item">
+                    <span class="pull-right badge">14</span>
+                    原始战纪
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">14</span>
+                    雪中悍刀行
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">14</span>
+                    逍遥游
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">14</span>
+                    唐朝小闲人
+                </li>
+            </ul>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="find">
+            <div class="list-group">
+                <button type="button" class="list-group-item"><span class="glyphicon glyphicon-stats"></span>&nbsp;&nbsp;排行榜
+                    <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                </button>
+                <button type="button" class="list-group-item">
+                    <span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;主题书单<span
+                        class="glyphicon glyphicon-chevron-right pull-right"></span></button>
+                <button type="button" class="list-group-item"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;分类<span
+                        class="glyphicon glyphicon-chevron-right pull-right"></span></button>
+                <button type="button" class="list-group-item"><span class="glyphicon  glyphicon-random"></span>&nbsp;&nbsp;随机看书<span
+                        class="glyphicon glyphicon-chevron-right pull-right"></span></button>
             </div>
 
+        </div>
     </div>
-  </div>
 </div>
 <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
-    //    /*迭代Loc的可枚举属性*/
-    //    function iterationLoc() {
-    //        let obj = {};
-    //        for (let key of Object.keys(localStorage)) {
-    //            obj[key] = localStorage[key];
-    //        }
-    //        return obj;
-    //    }
-    //
-    //    let tempObj = {};
-    //
-    //    function loadDB() {
-    //        let temp = localStorage.getItem("obj");
-    //        let temp2 = JSON.parse(temp);
-    //        document.getElementById('db').innerHTML = temp;
-    //        console.info(temp, "\n", temp2)
-    //    }
-    //
-    //    document.getElementById('dbOK').onclick = function () {
-    //
-    //        let temp = document.getElementById('text').value;
-    //        let n = new Date();
-    //        let obj = {
-    //            [temp]: n
-    //        };
-    //        localStorage.setItem("obj", JSON.stringify(obj));
-    //        console.log(obj, "存储OK", localStorage)
-    //    }
+  //    /*迭代Loc的可枚举属性*/
+  //    function iterationLoc() {
+  //        let obj = {};
+  //        for (let key of Object.keys(localStorage)) {
+  //            obj[key] = localStorage[key];
+  //        }
+  //        return obj;
+  //    }
+  //
+  //    let tempObj = {};
+  //
+  //    function loadDB() {
+  //        let temp = localStorage.getItem("obj");
+  //        let temp2 = JSON.parse(temp);
+  //        document.getElementById('db').innerHTML = temp;
+  //        console.info(temp, "\n", temp2)
+  //    }
+  //
+  //    document.getElementById('dbOK').onclick = function () {
+  //
+  //        let temp = document.getElementById('text').value;
+  //        let n = new Date();
+  //        let obj = {
+  //            [temp]: n
+  //        };
+  //        localStorage.setItem("obj", JSON.stringify(obj));
+  //        console.log(obj, "存储OK", localStorage)
+  //    }
 </script>
 </body>
 </html>

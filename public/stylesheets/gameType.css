@@ -1,19 +1,22 @@
-html,body,main{
+html, body, main {
     height: 100%;
     margin: 0;
     overflow: hidden;
 }
-main{
+
+main {
     background-color: cadetblue;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-main .font{
+
+main .font {
     font-size: 400px;
-    font-family:'a671b0527d517113';
+    font-family: 'a671b0527d517113';
 }
-.deploy{
+
+.deploy {
     position: absolute;
     background-color: brown;
     z-index: 2;
@@ -25,10 +28,12 @@ main .font{
     flex-direction: column;
     text-align: center;
 }
-.deploy input{
+
+.deploy input {
     width: 100px;
 }
-.she{
+
+.she {
     position: absolute;
     top: 0;
     left: 0;
@@ -36,21 +41,29 @@ main .font{
     height: 30px;
     transition: 1s;
 }
-.she:hover{
+
+.she:hover {
     transform: rotate(360deg);
 }
+
 @keyframes asUp {
-    to{width: 0}
-    from{width: 10%;
-        min-width: 110px;}
+    to {
+        width: 0
+    }
+    from {
+        width: 10%;
+        min-width: 110px;
+    }
 }
-.tip{
+
+.tip {
     position: absolute;
-    top:0;
+    top: 0;
     left: 40px;
     line-height: 30px;
     font-size: 30px;
 }
-#score{
+
+#score {
     padding: 0 10px 0 10px;
 }
