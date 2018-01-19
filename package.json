@@ -1,0 +1,33 @@
+{
+  "name": "zhangyuhan2016.github.io",
+  "version": "1.0.0",
+  "description": "\"用vue重写\"",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html --public-url /"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangyuhan2016/zhangyuhan2016.github.io.git"
+  },
+  "author": "zhangyuhan2016",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhangyuhan2016/zhangyuhan2016.github.io/issues"
+  },
+  "homepage": "https://github.com/zhangyuhan2016/zhangyuhan2016.github.io#readme",
+  "dependencies": {
+    "vue": "^2.5.13",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.15.0",
+    "eslint-plugin-vue": "^4.2.0",
+    "node-sass": "^4.7.2",
+    "parcel-bundler": "^1.4.1",
+    "parcel-plugin-eslint": "^1.0.0",
+    "parcel-plugin-vue": "^1.5.0"
+  }
+}
