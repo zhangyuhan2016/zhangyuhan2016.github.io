@@ -2,7 +2,7 @@
   "name": "zhangyuhan2016.github.io",
   "version": "1.0.0",
   "description": "\"用vue重写\"",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "dev": "parcel index.html",
     "build": "parcel build index.html --public-url /"

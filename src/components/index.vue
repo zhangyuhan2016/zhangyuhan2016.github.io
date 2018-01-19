@@ -1,22 +1,22 @@
 <template>
     <div class="index">
-        <div>
+        <div class="box">
             <span>工资</span>
             <input type="number" placeholder="工资">
             <span>剩余工资 {{user.allmoney}}</span>
         </div>
-        <div>
+        <div class="box">
             <span>公积金缴费基准</span>
             <input type="number">
         </div>
-        <div>
+        <div class="box">
             <span>单位</span>
             <input type="number" placeholder="12">
             <span>%</span>
             <input type="checkbox" checked>
             <input type="number" placeholder="最高缴费">
         </div>
-        <div>
+        <div class="box">
             <span>个人</span>
             <input type="number" placeholder="12">
             <span>%</span>
@@ -46,6 +46,12 @@
 <style lang='scss'>
     .index {
         box-sizing: border-box;
-        background-color: green;
+        background-color: black;
+        color: red;
+        font-size: 30px;
+        .box{
+            display: flex;
+            flex: 1;
+        }
     }
 </style>
