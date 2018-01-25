@@ -5,7 +5,7 @@
                 {{item.name}}
             </router-link>
         </div>
-        <div class="card-bg">
+        <div class="my-bg-card">
             <li v-for="(item,index) in cards.cardNumber" v-bind:key="item" class="card"
                 v-bind:style="cards.cardCss[index]" data-number="item">
             </li>
@@ -14,6 +14,7 @@
 </template>
 <script>
   import { UpCard } from '../assets/js/UpCard'
+
   export default {
     name: 'index',
     data: function () {
@@ -31,6 +32,15 @@
         }, {
           name: '扫雷',
           url: 'mine'
+        }, {
+          name: '仿picker (touch) ',
+          url: 'picker'
+        }, {
+          name: '图中点字验证码',
+          url: 'yzm'
+        }, {
+          name: '拖动验证码',
+          url: 'dragYzm'
         }]
       }
     },
@@ -80,7 +90,7 @@
         }
     }
 
-    .card-bg {
+    .my-bg-card {
         /* 块动画背景 */
         z-index: -1;
         background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);

@@ -8,6 +8,9 @@ const moneyCounter = ()=> import('../components/money-counter')
 const font3D = () => import('../components/font-3D')
 const textPrint = () => import('../components/text-print')
 const mine = () => import('../components/mine')
+const picker = () => import('../components/picker')
+const yzm = () => import('../components/yzm')
+const dragYzm = () => import('../components/drag-yzm')
 
 Vue.use(Router)
 
@@ -32,5 +35,17 @@ export default new Router({
     path: '/mine',
     name: 'mine',
     component: mine
+  }, {
+    path: '/picker',
+    name: 'picker',
+    component: picker
+  }, {
+    path: '/yzm',
+    name: 'yzm',
+    component: yzm
+  }, {
+    path: '/dragYzm',
+    name: 'dragYzm',
+    component: dragYzm
   }]
 })
