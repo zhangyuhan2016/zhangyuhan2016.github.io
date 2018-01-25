@@ -1,5 +1,7 @@
 ## vue + parcel 重构demo
 
+[去看看有啥demo](https://zhangyuhan2016.github.io/#/)
+
 - [x] 剔除 cv、野狗云、打地鼠等
 - [ ] 添加 EsLint
 
