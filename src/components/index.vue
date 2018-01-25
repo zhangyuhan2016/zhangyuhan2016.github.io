@@ -59,6 +59,7 @@
 </script>
 <style lang='scss'>
     .index {
+        min-width: 888px;
         box-sizing: border-box;
         display: flex;
         height: 100vh;
@@ -69,8 +70,10 @@
             box-sizing: border-box;
             padding: 0 50px;
             display: grid;
-            grid-column-gap: 1px;
+            grid-column-gap: 10px;
             grid-row-gap: 10px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-flow: row;
             > div {
                 display: flex;
                 align-items: center;
