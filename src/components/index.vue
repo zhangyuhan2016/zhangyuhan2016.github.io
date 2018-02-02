@@ -41,6 +41,9 @@
         }, {
           name: '拖动验证码',
           url: 'dragYzm'
+        }, {
+          name: '密码生成器',
+          url: 'getPassword'
         }]
       }
     },

@@ -11,6 +11,7 @@ const mine = () => import('../components/mine')
 const picker = () => import('../components/picker')
 const yzm = () => import('../components/yzm')
 const dragYzm = () => import('../components/drag-yzm')
+const getPassword = () => import('../components/get-password')
 
 Vue.use(Router)
 
@@ -47,5 +48,9 @@ export default new Router({
     path: '/dragYzm',
     name: 'dragYzm',
     component: dragYzm
+  }, {
+    path: '/getPassword',
+    name: 'getPassword',
+    component: getPassword
   }]
 })
