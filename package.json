@@ -1,0 +1,16 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "blog",
+  "main": "index.js",
+  "dependencies": {
+    "highlight.js": "^9.12.0",
+    "marked": "^0.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "create": "node config/build.js"
+  },
+  "author": "zhangyuhan2016",
+  "license": "MIT"
+}
