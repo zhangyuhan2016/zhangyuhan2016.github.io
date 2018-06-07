@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Language"content="zh-Hans"/>
+    <base target="_blank">
+    <title>mock-note</title><meta name="keywords"content="mock"><meta name="description"content="如果你还不知道如何在vue项目中使用mock,那太好了,我相信再过五分钟你就会了.你可能会疑惑,五分钟得时间真的够么?那么下面跟帅气得小哥哥走近 mock.js 咯 ~~~">
+    <meta name="author"content="zhangyuhan2016,https://zhangyuhan2016.github.io/">
+    <meta name="generator"content="webStorm"/>
+    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/zenburn.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_693743_2e6ueb52zvholxr.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body class="essay">
+<div class="essay-title">
+        <div class="title" data-time="undefined" data-tags="mock">mock-note</div>
+        <span class="title-line"></span>
+        <div class="info">如果你还不知道如何在vue项目中使用mock,那太好了,我相信再过五分钟你就会了.你可能会疑惑,五分钟得时间真的够么?那么下面跟帅气得小哥哥走近 mock.js 咯 ~~~</div>
+    </div><p><img src="../static/images/mock/mock.png" alt="mock"></p>
+<h3 id="-mock-js">安装 mock.js</h3>
+<p>如果你看了标题以为我会告诉你怎么安装,那么你想错了..</p>
+<pre><code class="javascript hljs">npm install mockjs --<span class="hljs-built_in">save</span>-<span class="hljs-built_in">dev</span></code></pre><ul>
+<li><a href="https://github.com/nuysoft/Mock/wiki/Getting-Started">文档</a></li>
+</ul>
+<h3 id="-">使用</h3>
+<p>下面是使用教程,全是图哦,幸福感满满有没有</p>
+<p><img src="../static/images/mock/mock-mock.png" alt="配置"></p>
+<pre><code class="javascript hljs"><span class="hljs-comment">// xx/mock.js</span>
+import Mock <span class="hljs-keyword">from</span> <span class="hljs-string">'mockjs'</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">base</span> = <span class="hljs-string">'http://localhost:8080'</span>
+Mock.mock(<span class="hljs-keyword">base</span> + <span class="hljs-string">'/mock'</span>, {
+  <span class="hljs-string">'name'</span>: <span class="hljs-string">'@name'</span>
+})
+Mock.mock(<span class="hljs-keyword">base</span> + <span class="hljs-string">'/test'</span>, <span class="hljs-string">'post'</span>, {
+  <span class="hljs-string">'age|1-100'</span>: <span class="hljs-number">100</span>
+})
+export <span class="hljs-keyword">default</span> Mock</code></pre><p>细心得你会发现代码和图上不一样,为啥子呢,这个你需要了解一下两者得区别 <a href="https://www.zhihu.com/question/56820346">require，import区别？</a>
+<img src="../static/images/mock/mock-main.png" alt="引入"></p>
+<pre><code class="javascript hljs"><span class="hljs-comment">// main.js</span>
+<span class="hljs-comment">/* mock */</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'./xx/mock'</span></code></pre><p><img src="../static/images/mock/mock-config.jpg" alt="配置axios">
+<strong>这里一定要注意导出哦</strong></p>
+<pre><code class="javascript hljs"> <span class="hljs-comment">// config.js</span>
+ <span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">'axios'</span>
+ <span class="hljs-comment">// 配置api地址</span>
+ <span class="hljs-keyword">const</span> baseURL = <span class="hljs-string">'/api'</span>
+ <span class="hljs-comment">// axios设置</span>
+ <span class="hljs-keyword">const</span> $ajax = axios.create({
+   baseURL,
+   <span class="hljs-attr">timeout</span>: <span class="hljs-number">5000</span>,
+   <span class="hljs-attr">withCredentials</span>: <span class="hljs-literal">true</span>  <span class="hljs-comment">// 跨域cookie</span>
+ })
+ <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> $ajax</code></pre><p><img src="../static/images/mock/mock-getData.png" alt="配置api"></p>
+<pre><code class="javascript hljs"><span class="hljs-comment">// getData.js</span>
+<span class="hljs-keyword">import</span> $ajax <span class="hljs-keyword">from</span> <span class="hljs-string">'./config'</span>
+<span class="hljs-comment">/* 测试 */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> getName = <span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> $ajax.get(<span class="hljs-string">'/mock'</span>, data)</code></pre><p><img src="../static/images/mock/mock-use.png" alt="使用"></p>
+<h3 id="-">总结</h3>
+<p>我相信聪明得你一定五分钟都没有用到就 Get√ 
+拜拜,下期再见</p>
+
+<!--底部-->
+<div class="bottom-box">
+    <div class="left">
+        <div class="op">
+            <i class="iconfont icon-xihuan" id="like" data-like="0"></i>
+        </div>
+        <div class="op time">
+            <span>2018-06-05 15:06:03</span><span>2018-06-07 16:20:37</span>
+        </div>
+    </div>
+    <div class="right">
+        <div class="op">
+            <i class="iconfont icon-kanzi" id="kanzi" data-like="1"></i>
+        </div>
+        <div class="op">
+            <i class="iconfont icon-yuedu" id="yuedu" data-like="0"></i>
+        </div>
+    </div>
+</div>
+<script src="../static/js/notChrome.js"></script>
+<script src="../static/js/cos-js-sdk-v5.min.js"></script>
+<script src="../static/js/essay.js"></script>
+</body>
+</html>

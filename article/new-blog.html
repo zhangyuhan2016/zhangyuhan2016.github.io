@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Language"content="zh-Hans"/>
+    <base target="_blank">
+    <title>new-blog</title><meta name="keywords"content="blog node md markdown marked highlight"><meta name="description"content="之前是通过hexo、next搭建的博客在 gitee pages,最近突然想自己实现一下把md转化为html这个操作,也方便自己修改样式和添加demo,所以有了这一版的new blog,如果你细心看过，会发现这个仓库已经有了三个分支，第一个分支是初学时做的cv、第二个分支是 vue + parcel、现在是第几个呢,你猜咯 ~~">
+    <meta name="author"content="zhangyuhan2016,https://zhangyuhan2016.github.io/">
+    <meta name="generator"content="webStorm"/>
+    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/zenburn.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_693743_2e6ueb52zvholxr.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body class="essay">
+<div class="essay-title">
+        <div class="title" data-time="undefined" data-tags="blog node md markdown marked highlight">new-blog</div>
+        <span class="title-line"></span>
+        <div class="info">之前是通过hexo、next搭建的博客在 gitee pages,最近突然想自己实现一下把md转化为html这个操作,也方便自己修改样式和添加demo,所以有了这一版的new blog,如果你细心看过，会发现这个仓库已经有了三个分支，第一个分支是初学时做的cv、第二个分支是 vue + parcel、现在是第几个呢,你猜咯 ~~</div>
+    </div><h3 id="-">介绍</h3>
+<p>这个页面是通过 marked + highlight 转化的 HTML片段加上 Head等实现的</p>
+<p>前期本来是用的markdown-it做的转化,但是自定义解析真的很磨人,呀呀呀</p>
+<p>本来还上了UglifyJS,但是一转念发现自己整那么多干啥,专心写md就好了,遂放弃</p>
+<p>在界面UI的实现上抄袭了 <a href="https://isux.tencent.com/articles/">ISUX</a>、</p>
+<p>参考了其他网站的一些效果</p>
+<p>使用的腾讯云的对象存储,密钥就在代码里,求大佬放过,不要搞事情...</p>
+<h3 id="-">文字显示效果的实现</h3>
+<p>本来是准备手动计算元素的top值和scroll值比较然后palapala...
+但是突然脑子里闪了一下,没错, 就是它 ~ <a href="http://www.ruanyifeng.com/blog/2016/11/intersectionobserver_api.html">IntersectionObserver</a></p>
+<h3 id="-">计划</h3>
+<p>后期要不要做markdown实时预览还是比较纠结的,因为我本人没有这个需求</p>
+<p>写的时候本来准备把点赞和阅读数量生成图片存储在腾讯云,然后看文档发现可以直接传字符串...</p>
+<p>关于图片像素藏代码,看这里的大佬怎么说:</p>
+<ul>
+<li><a href="https://imququ.com/post/code2png-encoder.html">像素化你的代码</a></li>
+<li><a href="http://www.zhangxinxu.com/wordpress/2017/12/js-css-encrypt-to-image/">把JS,CSS任意文本文件加密成一张图片</a></li>
+</ul>
+
+<!--底部-->
+<div class="bottom-box">
+    <div class="left">
+        <div class="op">
+            <i class="iconfont icon-xihuan" id="like" data-like="0"></i>
+        </div>
+        <div class="op time">
+            <span>2018-06-07 16:02:00</span><span>2018-06-07 17:23:51</span>
+        </div>
+    </div>
+    <div class="right">
+        <div class="op">
+            <i class="iconfont icon-kanzi" id="kanzi" data-like="1"></i>
+        </div>
+        <div class="op">
+            <i class="iconfont icon-yuedu" id="yuedu" data-like="0"></i>
+        </div>
+    </div>
+</div>
+<script src="../static/js/notChrome.js"></script>
+<script src="../static/js/cos-js-sdk-v5.min.js"></script>
+<script src="../static/js/essay.js"></script>
+</body>
+</html>

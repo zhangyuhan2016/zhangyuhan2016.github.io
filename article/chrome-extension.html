@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Language"content="zh-Hans"/>
+    <base target="_blank">
+    <title>chrome扩展开发</title><meta name="keywords"content="chrome vue 爬虫 axios"><meta name="description"content="chrome扩展的练习学习晋级记录">
+    <meta name="author"content="zhangyuhan2016,https://zhangyuhan2016.github.io/">
+    <meta name="generator"content="webStorm"/>
+    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/zenburn.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_693743_2e6ueb52zvholxr.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body class="essay">
+<div class="essay-title">
+        <div class="title" data-time="undefined" data-tags="chrome vue 爬虫 axios">chrome扩展开发</div>
+        <span class="title-line"></span>
+        <div class="info">chrome扩展的练习学习晋级记录</div>
+    </div><h3 id="-">参考资料</h3>
+<ol>
+<li><a href="http://www.ituring.com.cn/book/miniarticle/60134">我的第一个Chrome扩展</a></li>
+<li><a href="https://www.kancloud.cn/wizardforcel/chrome-doc/98796">Chrome 扩展开发文档</a></li>
+</ol>
+<h3 id="-">二维码生成器</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 获取当前标签的URL,通过jquery.qrcode.js绘制二维码</li>
+<li><input disabled="" type="checkbox"> 右键选中URL生成二维码</li>
+</ul>
+<p><img src="../static/images/chrome-1.gif" alt="chrome-ed"></p>
+<h4 id="-">参考资料</h4>
+<ul>
+<li><a href="https://github.com/jeromeetienne/jquery-qrcode">jquery.qrcode.js</a></li>
+</ul>
+<h3 id="code">Code</h3>
+<p><strong>js</strong></p>
+<pre><code class="javascript hljs"><span class="hljs-comment">/* 获取当前标签的URL */</span>
+chrome.tabs.query({
+  <span class="hljs-attr">active</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">lastFocusedWindow</span>: <span class="hljs-literal">true</span>
+}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">tabs</span>) </span>{
+  <span class="hljs-keyword">let</span> url = tabs[<span class="hljs-number">0</span>].url
+  drawCode(url)
+})
+
+<span class="hljs-comment">/* 绘制二维码 */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">drawCode</span> (<span class="hljs-params">url</span>) </span>{
+  $(<span class="hljs-string">'.reload input'</span>).val(url)
+  $(<span class="hljs-string">'#qrcode'</span>).html(<span class="hljs-string">''</span>).qrcode({<span class="hljs-attr">width</span>: <span class="hljs-number">200</span>, <span class="hljs-attr">height</span>: <span class="hljs-number">200</span>, <span class="hljs-attr">text</span>: url})
+}
+$(<span class="hljs-string">'button'</span>).on(<span class="hljs-string">'click'</span>,<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  drawCode($(<span class="hljs-string">'input'</span>).val())
+})</code></pre><p><strong>右键菜单设置</strong></p>
+<pre><code class="javascript hljs">chrome.contextMenus.create({
+  <span class="hljs-string">'type'</span>:<span class="hljs-string">'normal'</span>,
+  <span class="hljs-string">'title'</span>:<span class="hljs-string">'生成二维码'</span>,
+  <span class="hljs-string">'onclick'</span>: showCode
+});
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">showCode</span> <span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">/**/</span>
+}
+<span class="hljs-comment">/* 离开popup改变icon */</span>
+chrome.windows.onFocusChanged.addListener(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(window)</span> </span>{
+  chrome.browserAction.setIcon({path: <span class="hljs-string">'/images/qrcode.png'</span>})
+});</code></pre><p><strong>manifest.json</strong></p>
+<pre><code class="json hljs">{
+  <span class="hljs-attr">"manifest_version"</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"二维码生成器"</span>,
+  <span class="hljs-attr">"version"</span>: <span class="hljs-string">"1.0"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"利用二维码库制作的二维码生成器"</span>,
+  <span class="hljs-attr">"icons"</span>: {
+    <span class="hljs-attr">"128"</span>: <span class="hljs-string">"images/qrcode.png"</span>
+  },
+  <span class="hljs-attr">"browser_action"</span>: {
+    <span class="hljs-attr">"default_icon"</span>: {
+      <span class="hljs-attr">"19"</span>: <span class="hljs-string">"images/qrcode.png"</span>,
+      <span class="hljs-attr">"38"</span>: <span class="hljs-string">"images/qrcode-hover.png"</span>
+    },
+    <span class="hljs-attr">"default_title"</span>: <span class="hljs-string">"生成二维码"</span>,
+    <span class="hljs-attr">"default_popup"</span>: <span class="hljs-string">"index.html"</span>
+  },
+  <span class="hljs-attr">"permissions"</span>: [
+    <span class="hljs-string">"tabs"</span>,
+    <span class="hljs-string">"activeTab"</span>,
+    <span class="hljs-string">"contextMenus"</span>
+  ],
+  <span class="hljs-attr">"background"</span>: {
+    <span class="hljs-attr">"scripts"</span>: [
+      <span class="hljs-string">"js/background.js"</span>
+    ]
+  }
+}</code></pre><h3 id="-txt-txt-">小说txt下载和本地txt阅读</h3>
+<p>在学习node爬虫的时候,突然有一个想法
+浏览器端实现一个爬虫可不可以呢？</p>
+<p>说着咱就开始写,我准备用扩展程序的背景页来做,然后发现跨域
+后续又想到可以注入脚本,于是打开小说网站的目录页,准备和node爬虫用一样的方法</p>
+<ul>
+<li><p>第一步  获取小说的目录</p>
+<p>  获取目录以后那就开始请求HTML吧,那就用axios来整</p>
+</li>
+<li><p>第二步 获取HTML里的内容</p>
+<p>  没有浏览器端的cheerio,我该怎么获取里面的dom</p>
+<p>  创建一个节点,然后挂在body里,ifarme行不,然后就可以使用jQ来取内容</p>
+<p>  啊哈哈,我真是太棒了,然而事情并不简单...</p>
+<p>  经过一系列不忍回首的敲打,我选择直接正则匹配内容,通过匹配div的ID、Name取到了文章内容</p>
+</li>
+<li><p>第三步 写入文档</p>
+<p>  啊,怎么创建一个文档呢,经过不辞幸苦的搜索找到了<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/URL/createObjectURL">createObjectURL</a>
+  后续的事情一定很简单了吧,无脑拉取输出</p>
+<p>  但是网站访问限制,请求并发的问题也避不过去呀</p>
+</li>
+<li><p>后续</p>
+<p>  一个网站怎么够呢,我的目标是星辰大海</p>
+<p>  这时候问题就让人难以抉择了,网站的内容目录ID各不相同</p>
+<p>  那简单,每个host作为一个key,写写规则存到本地不就行了,在弄个分享规则到云上,岂不美滋滋</p>
+<p>  可是不想改代码呀...</p>
+<p>  就选了几个目录内容差不多的网址捏一捏,😄</p>
+</li>
+<li><p>本地小说阅读</p>
+<p>  下载完了怎么看呢？总不能用文本看吧,那咱再来弄个阅读器</p>
+<p>  说是阅读器,其实也是注入脚本和样式在file网址下,右键一下,发现浏览器打开文档在<code>pre</code>,那就来改造吧</p>
+</li>
+</ul>
+<ul>
+<li><p>生成目录</p>
+<p>  通过正则匹配第N章 xxx的,然后给他高亮,这时候我又想,那刚才写入的时候可以直接标记一下文章章节.</p>
+<p>  当然你知道的,我懒...</p>
+</li>
+<li><p>自动翻页</p>
+<p>  一开始是通过top值滚动,这样滚起来有点尬尬的
+  就换成tranform加过渡来翻页
+  效果还是有点瑕疵,看的时间久了眼花</p>
+</li>
+<li><p>设置间距颜色什么的</p>
+<p>  这个很简单,但是找到合适的配色不容易,简单扒了下起点的配色</p>
+</li>
+</ul>
+<p>这个项目优化的点还很多,后续再更新</p>
+<p><img src="../static/images/book_01.png" alt="效果图">
+<img src="../static/images/book.gif" alt="效果图"></p>
+<p><a href="https://github.com/zhangyuhan2016/book-down-read/releases">book-down-read</a></p>
+<h3 id="-vue-">使用vue开发</h3>
+<p>可以把vue项目npm run build 以后,在<strong>manifest.json</strong>修改<strong>default_popup</strong>的入口为打包后的页面</p>
+<h3 id="-chrome-">国内安装 chrome扩展</h3>
+<ul>
+<li><p><a href="https://chrome-extension-downloader.com">1</a></p>
+</li>
+<li><p><a href="https://www.crx4chrome.com/">2</a></p>
+</li>
+</ul>
+<p>下载完成后打开扩展程序<code>chrome://extensions/</code>勾选开发模式,将下载的扩展拖入安装</p>
+
+<!--底部-->
+<div class="bottom-box">
+    <div class="left">
+        <div class="op">
+            <i class="iconfont icon-xihuan" id="like" data-like="0"></i>
+        </div>
+        <div class="op time">
+            <span>2018-06-07 16:43:53</span><span>2018-06-07 17:25:20</span>
+        </div>
+    </div>
+    <div class="right">
+        <div class="op">
+            <i class="iconfont icon-kanzi" id="kanzi" data-like="1"></i>
+        </div>
+        <div class="op">
+            <i class="iconfont icon-yuedu" id="yuedu" data-like="0"></i>
+        </div>
+    </div>
+</div>
+<script src="../static/js/notChrome.js"></script>
+<script src="../static/js/cos-js-sdk-v5.min.js"></script>
+<script src="../static/js/essay.js"></script>
+</body>
+</html>
