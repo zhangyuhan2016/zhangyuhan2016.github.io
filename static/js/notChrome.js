@@ -1,0 +1,1 @@
+function notChrome(){if(null===navigator.userAgent.toLowerCase().match(/chrome\/([\d.]+)/)){let a=document.createElement('div');a.className='md-chrome',a.innerText='\u5982\u679C\u6837\u5F0F\u51FA\u73B0\u9519\u4E71,\u8BF7\u4F7F\u7528Chrome\u6D4F\u89C8\u5668',document.querySelector('body').appendChild(a)}}notChrome();
