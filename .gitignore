@@ -19,3 +19,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.map
+src/js/showText.js
