@@ -365,7 +365,7 @@ html, body {
     padding: 0.5em;
     background: rgb(63, 63, 63);
     code {
-      all:unset;
+      background: unset;
       font-family: Helvetica;
       &.hljs {
         &::-webkit-scrollbar {
