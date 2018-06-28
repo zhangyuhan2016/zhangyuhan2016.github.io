@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>game</title>
+    <style>
+        #game{font-family:Avenir,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-align:center;color:#2c3e50}#nav{padding:30px}#nav a{font-weight:700;color:#2c3e50}#nav a.router-link-exact-active{color:#42b983}.Game{-webkit-box-sizing:border-box;box-sizing:border-box}.Game .dialog{font-size:40px;text-align:center;top:20vh}.Game .dialog,.Game .top{position:fixed;width:100vw}.Game .top{top:20px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-pack:distribute;justify-content:space-around;font-size:20px;font-weight:700}.Game .top .game-money{color:#ffe59d}.Game .top .game-mp{display:block;width:300px;height:30px;background:#e6e6e6;position:relative}.Game .top .game-mp .mm{position:absolute;width:300px;height:30px;background:#4c8071}.Game #canvas{border:1px solid red}
+    </style>
+</head>
+<body>
+<div class="Game" id="game">
+    <div class="top">
+        <div class="game-mp">
+            <div class="mm" :style="{width: 300 * (this.hero.mp / 2000) +'px'}"></div>
+        </div>
+        <div class="game-score">分数:{{world.s}}</div>
+        <div class="game-money">金币:{{world.money}}</div>
+    </div>
+    <div v-if="world.status === null" class="dialog">
+        游戏失败，得分{{world.s}}
+    </div>
+    <canvas id="game-main" width="1000" height="608"></canvas>
+    <div class="tip" v-show="world.status != false">空格键起飞,按下 K {{world.status === null ? '重新开始' : '开始'}}游戏</div>
+</div>
+<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.min.js"></script>
+<script>
+    var app = new Vue({
+      el: '#game',
+      data: {
+        bars: {
+          speed: 120
+        },
+        bar: [{x: 200, y: 420}, {x: 400, y: 420}, {x: 800, y: 420}],
+        old: Date.now(),
+        hero: {
+          x: 100,
+          y: 436,
+          w: 92 / 2,
+          h: 39,
+          j: 100,
+          next: 100,
+          speed: 200,
+          jump: false,
+          status: false,
+          mp: 2000
+        },
+        block: {
+          speed: 240,
+          style: [
+            {w: 41, h: 53},
+            {w: 64, h: 54},
+            // {w: 60, h: 97},
+            {w: 73, h: 112},
+            {w: 197 / 2, h: 407 / 2},
+            {w: 128, h: 128},
+            {w: 102 / 2, h: 98 / 2},
+            {w: 128 / 2, h: 128 / 2},
+            {w: 128 / 2, h: 143 / 2},
+          ]
+        },
+        world: {
+          g: 200,
+          temp: null,
+          status: true,
+          s: 0,
+          speed: 240,
+          money: 0
+        },
+        blocks: [
+          {x: 900, y: 447, w: 41, h: 53, i: 0},
+          {x: 1200, y: 446, w: 64, h: 54, i: 1},
+          {x: 1500, y: 403, w: 60, h: 97, i: 2}
+        ],
+        moneyStyle: [
+          {w: 44, h: 44}
+        ],
+        money: [
+          // {x: 400, y: 0, w: 44, h: 44,i: 0},
+          {x: 1000, y: 0, w: 44, h: 44, i: 0},
+        ],
+        allImg: null,
+        arrow: {
+          type: null,
+          index: 0,
+          time: Date.now()
+        },
+        bg: {
+          x: 0,
+          speed: 242
+        }
+      },
+      beforeMount: function () {
+        /* 获取图片资源 */
+        function getImg (name) {
+          return new Promise((resolve) => {
+            let img = new Image()
+            img.src = `https://raw.githubusercontent.com/zhangyuhan2016/game-demo/master/src/assets/${name}`
+            img.onload = () => { resolve(img) }
+          })
+        }
+
+        let lArr = [1, 2, 4, 5, 6, 7, 8, 9].map(v => `m/m_0${v}.png`)
+        let allImg = ['l_02.png', 'h/h_02.png', 'd/money.png'].concat(lArr)
+        Promise.all(allImg.map(v => getImg(v))).then(res => {
+          this.allImg = {
+            bg: res[0],
+            hero: res[1],
+            money: [res[2]],
+            m: res.slice(3,)
+          }
+          // this.tip.show = false
+          this.main()
+        })
+      },
+      mounted: function () {
+        /**
+         * 按键监听
+         * */
+        window.onkeydown = (e) => {
+          let code = e.keyCode
+          /* 暂停 */
+          if (code === 76) {
+            if (this.world.status === null) {
+              this.world.status = false
+            } else {
+              this.world.status = null
+            }
+          }
+          if (code === 75) {
+            /* 开始 */
+            if (this.world.status === null) {
+              this.hero.jump = false
+              this.old = Date.now()
+              this.world.s = 0
+              this.blocks = [
+                {x: 900, y: 447, w: 41, h: 53, i: 0},
+                {x: 1200, y: 446, w: 64, h: 54, i: 1},
+                {x: 1500, y: 403, w: 60, h: 97, i: 2}
+              ]
+              this.money =  [
+                {x: 1000, y: 0, w: 44, h: 44, i: 0},
+              ]
+              this.world.money = 0
+              this.hero.mp = 2000
+            }
+            this.world.status = false
+          }
+          if (code === 32) {
+            this.hero.jump = true
+          }
+        }
+        window.onkeyup = (e) => {
+          let code = e.keyCode
+          if (code === 32) {
+            this.hero.jump = false
+            // if (this.world.status === null) {
+            //   this.hero.jump = false
+            //   this.world.s = 0
+            //   this.blocks = [
+            //     {x: 900, y: 447, w: 41, h: 53, i: 0},
+            //     {x: 1200, y: 446, w: 64, h: 54, i: 1},
+            //     {x: 1500, y: 403, w: 60, h: 97, i: 2}
+            //   ]
+            // }
+            // // if (this.hero.jump === false) {
+            // //   this.hero.jump = true
+            // //   this.world.status = false
+            // // }
+            // this.hero.jump = true
+            // this.world.status = false
+          }
+        }
+      },
+      methods: {
+        /**
+         * 定时器函数
+         * */
+        main () {
+          /* 获取时间间隔 */
+          let now = Date.now()
+          let delta = now - this.old
+          if (this.world.status === false) {
+            /* 更新数据 */
+            this.addData(delta / 1000)
+          }
+          /* 绘制 */
+          this.drawALL()
+          if (this.world.status === false) {
+            /* 检测碰撞 */
+            let status = this.checkALL()
+            if (status) {
+              this.world.status = null
+            }
+          }
+          this.old = now
+          requestAnimationFrame(this.main)
+        },
+        /**
+         * 矩形碰撞检测
+         * @param A x
+         * @param B y
+         * @param C w
+         * @param D h
+         * */
+        check (A, B, C, D, E, F, G, H) {
+          // 转为对角线坐标
+          C += A, D += B, G += E, H += F
+
+          // 没有相交
+          if (C <= E || G <= A || D <= F || H <= B)
+            return [0, 0, 0, 0]
+
+          var tmpX, tmpY
+
+          if (E > A) {
+            tmpX = G < C ? [E, G] : [E, C]
+          } else {
+            tmpX = C < G ? [A, C] : [A, G]
+          }
+
+          if (F > B) {
+            tmpY = H < D ? [F, H] : [F, D]
+          } else {
+            tmpY = D < H ? [B, D] : [B, H]
+          }
+
+          return [tmpX[0], tmpY[0], tmpX[1], tmpY[1]]
+        },
+        /**
+         * 像素碰撞检测
+         * @param v 障碍物对象
+         * @param rect 矩形碰撞返回值
+         * */
+        testImg (v, rect) {
+          let canvas = document.createElement('canvas')
+          let ctx = canvas.getContext('2d')
+          let s = this.hero
+          ctx.globalCompositeOperation = 'source-over'
+          ctx.clearRect(0, 0, canvas.width, canvas.height)
+          ctx.drawImage(this.allImg.m[v.i], v.x - s.x, v.y - s.y, v.w, v.h)
+          ctx.globalCompositeOperation = 'source-in'
+          ctx.drawImage(this.allImg.hero, 0, 0, s.w, s.h)
+          let data = ctx.getImageData(0, 0, s.w, s.h)
+
+          // let data = ctx.getImageData(rect[0] - s.x,rect[1] - s.y,rect[2] - rect[0],rect[3] - rect[1]).data
+          let status = false
+          let temp = data.data.filter(v => v)
+          status = temp.length !== 0
+          // for (var i = 3; i < data.length; i += 4) {
+          //   if (data[i])
+          //     console.log('--data[i]--', data[i])
+          //   status = true
+          // }
+          return status
+          // return false
+        },
+        /**
+         * 生成Money
+         * @param obj money样式
+         * */
+        createMoney (obj) {
+          let x = Math.random() * 2000 + 1200
+          let y = Math.random() * 450
+          let some = this.blocks.some(v => {
+            let rect = this.check(x, y, obj.w,obj.h, v.x, v.y, v.w, v.h)
+            /* 矩形判断 */
+            let status = (rect[2] - rect[0]) * (rect[3] - rect[1]) > 0
+            return status
+          })
+          if (some) {
+            return this.createMoney()
+          } else {
+            this.money.push({x, y, w: obj.w, h: obj.h, i: obj.i})
+          }
+        },
+        /**
+         * 碰撞检测
+         * */
+        checkALL () {
+          this.money.forEach((v, i) => {
+            let rect = this.check(this.hero.x, this.hero.y, this.hero.w, this.hero.h, v.x, v.y, v.w, v.h)
+            /* 矩形判断 */
+            let status = (rect[2] - rect[0]) * (rect[3] - rect[1]) > 0
+            if (status) {
+              /* 加分 */
+              this.world.money ++
+              this.hero.mp += 500
+              if(this.hero.mp > 2000) {
+                this.hero.mp = 2000
+              }
+              this.money.splice(i, 1)
+              let style = this.moneyStyle
+              let ii = Math.floor(Math.random() * style.length)
+              let temp = style[ii]
+              this.createMoney({
+                w: temp.w, h: temp.h, i: ii
+              })
+            }
+          })
+          let some = this.blocks.some(v => {
+            let rect = this.check(this.hero.x, this.hero.y, this.hero.w, this.hero.h, v.x, v.y, v.w, v.h)
+            /* 矩形判断 */
+            let status = (rect[2] - rect[0]) * (rect[3] - rect[1]) > 0
+            if (status) {
+              /* 像素点判断 */
+              // console.log('--status-start-', status)
+              status = this.testImg(v, rect)
+              // console.log('--status-end-', status)
+            }
+            return status
+          })
+          return some
+
+          // let canvas = document.querySelector('#game-main')
+          // let ctx = canvas.getContext('2d')
+          // let v = this.hero
+          // let img = ctx.getImageData(v.x, v.y, v.w, v.h)
+          // for (let i = 3; i < img.data.length; i += 4) {
+          //   if (img.data[i]) {
+          //     console.log('--true--', true)
+          //   }
+          // }
+          // console.log('--img--', img.data[0],img.data[1],img.data[2],img.data[3])
+          // return this.world.temp === ctx.getImageData(v.x, v.y, v.w, v.h)
+          // let some = this.blocks.some(v => {
+          //   let x = this.hero.x <= v.x && v.x <= (this.hero.x + this.hero.w)
+          //   let y = (this.hero.y + this.hero.h) > v.y
+          //   return x && y
+          // })
+          // return some
+        },
+        /**
+         * 数值计算
+         * */
+        addData (m) {
+          /* 背景移动 */
+          let bgNum = this.bg.x
+          bgNum += this.bg.speed * m
+          if (bgNum >= 128) {
+            bgNum = 0
+          }
+          this.bg.x = bgNum
+          /* 添加金币 */
+          let tempMoney = this.money.map(v => {
+            v.x -= this.block.speed * m
+            return v
+          })
+          let mm = tempMoney.filter(v => {
+            return v.x < 0 - v.w
+          })
+          if (mm.length > 0) {
+            tempMoney.shift()
+            // tempMoney.push({x: 1200, y: 0, w: temp.w, h: temp.h, i: i})
+          }
+          this.money = tempMoney
+          if (mm.length > 0) {
+            let style = this.moneyStyle
+            let i = Math.floor(Math.random() * style.length)
+            let temp = style[i]
+            this.createMoney({
+              w: temp.w, h: temp.h, i: i
+            })
+          }
+          /* 障碍物移动 */
+          let tempArr = this.blocks.map(v => {
+            v.x -= this.block.speed * m
+            return v
+          })
+          let l = tempArr.filter(v => {
+            return v.x < 0 - v.w
+          })
+          if (l.length > 0) {
+            let style = this.block.style
+            let i = Math.floor(Math.random() * style.length)
+            let temp = style[i]
+            tempArr.shift()
+            this.world.s++
+            tempArr.push({x: 1100, y: 500 - temp.h, w: temp.w, h: temp.h, i: i})
+          }
+          this.blocks = tempArr
+          /* 人物跳跃 */
+          if (this.hero.jump) {
+            if (this.hero.y < 0) {
+              this.hero.y = 0
+            } else {
+              if (this.hero.mp > 0) {
+                this.hero.y -= this.hero.speed * m
+                this.hero.mp -= this.hero.speed * m
+              } else {
+                this.hero.y += this.world.g * m
+              }
+            }
+          } else {
+            if (this.hero.y < (500 - this.hero.h)) {
+              this.hero.y += this.world.g * m
+            } else {
+              this.hero.mp += this.hero.speed * m
+              if (this.hero.mp > 2000) {
+                this.hero.mp = 2000
+              }
+              this.hero.y = 500 - this.hero.h
+            }
+
+          }
+          // /* 重力 */
+          // if (this.hero.y < 459) {
+          //   this.hero.y += this.world.g * m
+          // } else {
+          //   this.hero.jump = false
+          // }
+        },
+        /**
+         * canvas 动画精灵
+         * @param ctx 2D对象
+         * @param type 事件
+         * @param img 图片对象
+         * @param step 间隔毫秒数
+         * @param all 切割总数
+         * */
+        anpaly (ctx, type, img, step = 60, all) {
+          let i = 0
+          if (type === this.arrow.type) {
+            let now = Date.now()
+            let delta = now - this.arrow.time
+            if (delta > step) {
+              // console.log('--this.arrow.index--', this.arrow.index)
+              this.arrow.time = now
+              this.arrow.index++
+            }
+          } else {
+            this.arrow.type = type
+            this.arrow.index = 0
+          }
+          if (this.arrow.index > all) {
+            this.arrow.index = 0
+          }
+          i = this.arrow.index
+          // console.log('--img--', img)
+          ctx.drawImage(img.img, img.sw * i, 0, img.sw, img.sh, img.x, img.y, img.w, img.h)
+          // ctx.drawImage(this.hero.img.move[i], this.hero.x, this.hero.y, this.hero.w, this.hero.h)
+        },
+        /**
+         * 绘图函数
+         * */
+        drawALL () {
+          /* 清空画布 */
+          let canvas = document.querySelector('#game-main')
+          let ctx = canvas.getContext('2d')
+          ctx.globalCompositeOperation = 'source-over'
+          ctx.clearRect(0, 0, canvas.width, canvas.height)
+          /* 绘制背景 */
+          // ctx.fillStyle = '#fff2e4'
+          ctx.drawImage(this.allImg.bg, this.bg.x, 0, 128, 128, 0, 485, 128, 128)
+          ctx.drawImage(this.allImg.bg, this.bg.x, 0, 128, 128, 128, 485, 128, 128)
+          ctx.drawImage(this.allImg.bg, this.bg.x, 0, 128, 128, 128 * 2, 485, 128, 128)
+          ctx.drawImage(this.allImg.bg, this.bg.x, 0, 128, 128, 128 * 3, 485, 128, 128)
+          ctx.drawImage(this.allImg.bg, this.bg.x, 0, 128, 128, 128 * 4, 485, 128, 128)
+          ctx.drawImage(this.allImg.bg, this.bg.x, 0, 128, 128, 128 * 5, 485, 128, 128)
+          ctx.drawImage(this.allImg.bg, this.bg.x, 0, 128, 128, 128 * 6, 485, 128, 128)
+          ctx.drawImage(this.allImg.bg, this.bg.x, 0, 128, 128, 128 * 7, 485, 128, 128)
+          ctx.drawImage(this.allImg.bg, this.bg.x, 0, 128, 128, 128 * 8, 485, 128, 128)
+          // this.anpaly(ctx,'bg',{
+          //   img: this.allImg.bg,
+          //   sw: 100,
+          //   sh: 108,
+          //   x: 0,
+          //   y: 485,
+          //   w: 1000,
+          //   h: 108
+          // },120,8)
+          // ctx.drawImage(this.allImg.bg, 0, 0, 100, 0, 0, 0, 1000, 108)
+          /* 绘制金币 */
+          this.money.forEach(v => {
+            ctx.drawImage(this.allImg.money[v.i], v.x, v.y, v.w, v.h)
+          })
+          /* 绘制障碍物 */
+          this.blocks.forEach(v => {
+            ctx.drawImage(this.allImg.m[v.i], v.x, v.y, v.w, v.h)
+          })
+          // ctx.globalCompositeOperation = 'source-in'
+          // ctx.globalCompositeOperation = 'destination-in'
+          /* 绘制角色 */
+          let v = this.hero
+          this.anpaly(ctx, 'hero', {
+            img: this.allImg.hero,
+            sw: v.w,
+            sh: v.h,
+            x: v.x,
+            y: v.y,
+            w: v.w,
+            h: v.h
+          }, 140, 1)
+          // ctx.drawImage(this.allImg.hero, v.x, v.y, v.w, v.h)
+          // this.world.temp = ctx.getImageData(v.x, v.y, v.w, v.h)
+
+        }
+      } // 函数
+    })
+</script>
+</body>
+</html>
