@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Language"content="zh-Hans"/>
+    <base target="_blank">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game-demo</title><meta name="keywords"content="game canvas vue"><meta name="description"content="canvas小游戏之小鸟飞啊飞">
+    <meta name="author"content="zhangyuhan2016,https://zhangyuhan2016.github.io/">
+    <meta name="generator"content="webStorm"/>
+    <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/zenburn.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_693743_2e6ueb52zvholxr.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+</head>
+<body class="essay">
+<div class="essay-title">
+        <div class="title" data-time="undefined" data-tags="game canvas vue">game-demo</div>
+        <span class="title-line"></span>
+        <div class="info">canvas小游戏之小鸟飞啊飞</div>
+    </div><h3 id="-">一些感慨</h3>
+<p>在刚接触前端的时候，就在简单尝试制造简单的2D游戏，还清楚的记得写了怪物巡逻范围、自动攻击..
+一晃过去两年，这期间虽然已从事前端，但却再没写过Canvas了...</p>
+<p>小鸟飞啊飞，主要玩法是玩家控制小鸟来躲避飞行中的障碍物，为了增加难度，加了速度递增</p>
+<p><a href="https://zhangyuhan2016.github.io/game-demo/">点我试玩</a></p>
+<p>后续加入新的小鸟、地图、道具、技能
+也可以加入对战模式</p>
+<h3 id="-">反思</h3>
+<p>在编程的时候遇到了些问题，还好都面向搜索引擎解决了...
+期间重构了几次</p>
+<ol>
+<li><strong>第一版</strong></li>
+</ol>
+<p>初版的时候没有梳理游戏逻辑、遇到问题就解决问题。
+界面UI等都是文字，个人当时觉得这样写起来会很快。
+但通过后续的重构发现是自己想当然了</p>
+<ol start="2">
+<li><strong>第二版</strong></li>
+</ol>
+<p>这一版有完整的UI和游戏的逻辑控制，因为有了第一版的反思，就先构建了游戏逻辑。
+但是到后续的道具扩展、地图扩展时也写了很多不清晰的冗余代码
+暴露了自己的设计还是没有良好的扩展性</p>
+<h3 id="-">总结</h3>
+<p>继续努力啦~~</p>
+
+<!--底部-->
+<div class="bottom-box">
+    <div class="left">
+        <div class="op">
+            <i class="iconfont icon-xihuan" id="like" data-like="0"></i>
+        </div>
+        <div class="op time">
+            <span>2018-07-06 17:17:25</span><span>2018-07-06 17:34:32</span>
+        </div>
+    </div>
+    <div class="right">
+        <div class="op">
+            <i class="iconfont icon-kanzi" id="kanzi" data-like="1"></i>
+        </div>
+        <div class="op">
+            <i class="iconfont icon-yuedu" id="yuedu" data-like="0"></i>
+        </div>
+    </div>
+</div>
+<script src="../static/js/notChrome.js"></script>
+<script src="../static/js/cos-js-sdk-v5.min.js"></script>
+<script src="../static/js/essay.js"></script>
+</body>
+</html>
