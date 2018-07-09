@@ -2,8 +2,17 @@
 <html lang="zh-Hans">
 <head>
     <meta charset="UTF-8">
-    <title>首页</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language"content="zh-Hans"/>
+    <title>zhangyuhan2016 - github pages</title>
+    <meta name="keywords"content="前端,web前端,EFE,Note,demo,zhangyuhan2016">
+    <meta name="description"content="zhangyuhan2016的个人作品,demo,文章记录和实验">
+    <meta name="author"content="zhangyuhan2016,https://zhangyuhan2016.github.io/">
+    <meta name="generator"content="webStorm"/>
     <link rel="stylesheet" href="static/css/index.css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json" />
 </head>
 <body>
 <div class="md-logo">
@@ -89,7 +98,7 @@
                 game-demo
             </div>
             <div class="info">
-                canvas小游戏之小鸟飞啊飞
+                canvas小游戏之小鸟飞啊飞的编写过程
             </div>
         </div>
     </a>
@@ -98,6 +107,16 @@
 <div class="md-dialog">
     <div class="dialog-bg"></div>
 </div>
+<script>
+  if (navigator.serviceWorker != null) {
+    navigator.serviceWorker.register('sw.js')
+      .then((registration) => {
+        console.log('Registered events at scope: ', registration.scope);
+      }).catch(err => {
+        console.error(err)
+    });
+  }
+</script>
 <script src="static/js/notChrome.js"></script>
 </body>
 </html>

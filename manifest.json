@@ -1,0 +1,19 @@
+{
+  "name": "zhangyuhan2016 try PWA",
+  "short_name": "Blog",
+  "display": "standalone",
+  "start_url": "/",
+  "theme_color": "#8888ff",
+  "background_color": "#aaaaff",
+  "icons": [
+    {
+      "src": "./static/images/z_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },{
+      "src": "./static/images/z_144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}
