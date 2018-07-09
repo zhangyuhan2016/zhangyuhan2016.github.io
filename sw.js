@@ -2,7 +2,7 @@
  * @file sw
  * @author zhangyuhan2016 <hi_zhangyuhan@163.com>
  */
-
+console.log('sw');
 // sw.js
 self.addEventListener('install', function (e) {
   e.waitUntil(
