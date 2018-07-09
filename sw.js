@@ -2,11 +2,10 @@
  * @file sw
  * @author zhangyuhan2016 <hi_zhangyuhan@163.com>
  */
-console.log('sw');
 // sw.js
 self.addEventListener('install', function (e) {
   e.waitUntil(
-    caches.open('v2').then(cache => {
+    caches.open('v3').then(cache => {
       return cache.addAll([
         '/index.html',
         '/static/css/index.css',
@@ -41,7 +40,7 @@ self.addEventListener('fetch', function (event) {
 
             var responseToCache = response.clone();
 
-            caches.open('v2')
+            caches.open('v3')
               .then(function (cache) {
                 cache.put(event.request, responseToCache);
               });
