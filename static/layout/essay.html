@@ -12,6 +12,7 @@
     <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/zenburn.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_693743_2e6ueb52zvholxr.css">
     <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/userSpeak.css">
 </head>
 <body class="essay">
 ${essay}
@@ -34,8 +35,15 @@ ${essay}
         </div>
     </div>
 </div>
+<!--评论-->
+<section id="userSpeak"></section>
 <script src="../static/js/notChrome.js"></script>
 <script src="../static/js/cos-js-sdk-v5.min.js"></script>
 <script src="../static/js/essay.js"></script>
+<script src="https://cdn.wilddog.com/sdk/js/2.5.8/wilddog.js" crossorigin="anonymous"></script>
+<script src="../static/js/userSpeak.js"></script>
+<script>
+  new UserSpeak({config: {syncURL: 'https://wd0126581988dtadhd.wilddogio.com'}})
+</script>
 </body>
 </html>
