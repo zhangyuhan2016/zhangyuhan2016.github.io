@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Language"content="zh-Hans"/>
     <base target="_blank">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>new-blog</title><meta name="keywords"content="blog node md markdown marked highlight"><meta name="description"content="之前是通过hexo、next搭建的博客在 gitee pages,最近突然想自己实现一下把md转化为html这个操作,也方便自己修改样式和添加demo,所以有了这一版的new blog,如果你细心看过，会发现这个仓库已经有了三个分支，第一个分支是初学时做的cv、第二个分支是 vue + parcel、现在是第几个呢,你猜咯 ~~">
     <meta name="author"content="zhangyuhan2016,https://zhangyuhan2016.github.io/">
     <meta name="generator"content="webStorm"/>
     <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/zenburn.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_693743_2e6ueb52zvholxr.css">
     <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/userSpeak.css">
 </head>
 <body class="essay">
 <div class="essay-title">
@@ -42,7 +45,7 @@
             <i class="iconfont icon-xihuan" id="like" data-like="0"></i>
         </div>
         <div class="op time">
-            <span>2018-06-07 16:02:00</span><span>2018-06-07 17:23:51</span>
+            <span>2018-08-30 09:26:45</span><span>2018-08-30 09:26:45</span>
         </div>
     </div>
     <div class="right">
@@ -54,8 +57,15 @@
         </div>
     </div>
 </div>
+<!--评论-->
+<section id="userSpeak"></section>
 <script src="../static/js/notChrome.js"></script>
 <script src="../static/js/cos-js-sdk-v5.min.js"></script>
 <script src="../static/js/essay.js"></script>
+<script src="https://cdn.wilddog.com/sdk/js/2.5.8/wilddog.js" crossorigin="anonymous"></script>
+<script src="../static/js/userSpeak.js"></script>
+<script>
+  new UserSpeak({config: {syncURL: 'https://wd0126581988dtadhd.wilddogio.com'}})
+</script>
 </body>
 </html>

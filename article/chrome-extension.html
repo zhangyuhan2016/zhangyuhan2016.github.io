@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Language"content="zh-Hans"/>
     <base target="_blank">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>chrome扩展开发</title><meta name="keywords"content="chrome vue 爬虫 axios"><meta name="description"content="chrome扩展的练习学习晋级记录">
     <meta name="author"content="zhangyuhan2016,https://zhangyuhan2016.github.io/">
     <meta name="generator"content="webStorm"/>
     <link href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/zenburn.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_693743_2e6ueb52zvholxr.css">
     <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/userSpeak.css">
 </head>
 <body class="essay">
 <div class="essay-title">
@@ -157,7 +160,7 @@ chrome.windows.onFocusChanged.addListener(<span class="hljs-function"><span clas
             <i class="iconfont icon-xihuan" id="like" data-like="0"></i>
         </div>
         <div class="op time">
-            <span>2018-06-07 16:43:53</span><span>2018-06-07 17:25:20</span>
+            <span>2018-08-30 09:26:45</span><span>2018-08-30 09:26:45</span>
         </div>
     </div>
     <div class="right">
@@ -169,8 +172,15 @@ chrome.windows.onFocusChanged.addListener(<span class="hljs-function"><span clas
         </div>
     </div>
 </div>
+<!--评论-->
+<section id="userSpeak"></section>
 <script src="../static/js/notChrome.js"></script>
 <script src="../static/js/cos-js-sdk-v5.min.js"></script>
 <script src="../static/js/essay.js"></script>
+<script src="https://cdn.wilddog.com/sdk/js/2.5.8/wilddog.js" crossorigin="anonymous"></script>
+<script src="../static/js/userSpeak.js"></script>
+<script>
+  new UserSpeak({config: {syncURL: 'https://wd0126581988dtadhd.wilddogio.com'}})
+</script>
 </body>
 </html>
