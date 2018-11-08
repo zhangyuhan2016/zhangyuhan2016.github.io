@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="留言，野狗云，新手引导，前端开发">
+    <meta name="description" contect="留言">
+    <meta name="author" contect="张雨涵">
+    <title>留言墙</title>
+    <!--<link rel="shortcut icon" href="../public/favicon.ico" type="image/x-icon" />    -->
+
+    <link href="https://cdn.bootcss.com/intro.js/2.5.0/introjs.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .popover-title{
+            display: block  !important;
+        }
+        .introjs-helperLayer{
+            opacity: 0.1;
+        }
+        .breath-light {
+            opacity: .8;
+            overflow: hidden;
+            animation: breath 5s ease-in-out infinite;
+            width: 15px;
+            height: 15px;
+            background: #04f339;
+            border-radius: 50%;
+        }
+        @keyframes breath {
+            from {opacity: .2;}
+            50% {opacity: 1; }
+            to {opacity: .2;}
+        }
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" width="1000" height="500"></canvas>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group input-group-lg">
+
+                    <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-star" aria-hidden="true" data-intro="输入你的名字"></span></span>
+                    <input type="text" id="name" class="form-control" placeholder="你的名字" aria-describedby="sizing-addon1">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="input-group input-group-lg">
+                    <input type="text" class="form-control" placeholder="想说的话..." id="tst">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="up">上墙!</button>
+                     </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+        </div>
+    </div>
+</nav>
+<!--我太懒了，不想写，搞了个捷径解决pop-->
+<div id="A">
+    <a class='breath-light' tabindex="0" style="position: absolute; top: 75px; left: 774px;" role="button" data-toggle="popover" data-trigger="focus" title="" data-content="asdsd" data-original-title="sadas" aria-describedby="popover311618">
+        .</a>
+</div>
+<script src="https://cdn.bootcss.com/intro.js/2.5.0/intro.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src = "https://cdn.wilddog.com/sdk/js/2.5.8/wilddog.js"></script>
+<!--引导设置-->
+<script>
+  function startIntro(){
+    var intro = introJs();
+    intro.setOptions({
+      'prevLabel':'&larr; 上一步',
+      'nextLabel':'下一步 &rarr;',
+      'skipLabel':'跳过',
+      'doneLabel':'完成',
+      overlayOpacity: 0.2,
+      steps: [
+        {
+          element:document.querySelector('#name'),
+          intro: "在这里输入你的名字 ",
+          position:"top"
+        },
+        {
+          element: document.querySelector("#tst"),
+          intro: "想留下来的话",
+          position:"top"
+        },
+        {
+          element:document.querySelector("#up"),
+          intro:"点击这里看看效果吧",
+          position:"top"
+        }
+      ],
+    });
+    intro.start();}
+  startIntro();
+</script>
+<!--index.js-->
+<script src="./index.js"></script>
+</body>
+</html>
