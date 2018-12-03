@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta name="keywords" content="zhangyuhan2016,face.js,机器学习,人脸识别">
+    <meta name="description" content="zhangyuhan2016's demo">
+    <meta name="author" content="zhangyuhan2016">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-page-mode" content="app">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <title>信息录入</title>
+    <script src="face-api-my.js"></script>
+    <link rel="stylesheet" href="./test.css">
+</head>
+<body>
+<header>人脸图片录入</header>
+<main>
+    <div id="imgs-box"></div>
+    <div class="add-box">
+        <span>点击添加人脸图片</span>
+        <input type="file" multiple="multiple" onchange="addBaseImg(this)" accept=".jpg, .jpeg, .png">
+    </div>
+    <button onclick="startAddBase()">训练模型<br><span>保存至 LocalStorage</span></button>
+</main>
+<footer>
+    该数据存储浏览器 LocalStorage 以便跨页面使用.
+    <br>
+    尝试后如需清除,
+    请手动清除缓存,
+    或点击 <a href="#del" onclick="window.localStorage.removeItem('face');alert('已删除')">清除</a></footer>
+<dialog class="dialog-an">
+    <div class="rotate"></div>
+    <br>
+    <span>正在提取特征符,剩余时间为: <span name="tip">120</span>s</span>
+    <br>
+    <span>成功后会自动跳转首页,请点击选择测试</span>
+</dialog>
+</body>
+<script>
+    let baseImgArr = []
+    let baseSignArr = []
+    let timeTodo = null
+    function startAddBase () {
+      if(baseImgArr.length <= 0) {
+        return alert('未添加数据')
+      }
+      let time = baseImgArr.length * 35
+      showDia(true,time)
+      allBaseImg().then(res => {
+        console.log('--res--', res)
+        let f = res.some(v => !v)
+        showDia(false)
+        if(f) {
+          alert('请重试')
+        } else {
+          alert('成功,即将跳转首页')
+          let tempA = JSON.parse(window.localStorage.getItem('face')) || []
+          let allA = tempA.concat(baseSignArr)
+          window.localStorage.setItem('face',JSON.stringify(allA))
+          window.location.href = 'index.html'
+        }
+      }).catch(err => {
+        console.error('--err--', err)
+      })
+    }
+    async function allBaseImg () {
+      let result = []
+      result = baseImgArr.map((v,i) => {
+        return getSignature(i)
+      })
+      return Promise.all(result)
+    }
+    function showDia (f,s) {
+      let d = document.querySelector('dialog')
+      let t = document.querySelector('dialog span[name="tip"]')
+      t.innerText = s || 0
+      if(s > 0) {
+        clearInterval(timeTodo)
+        timeTodo = setInterval(() => {
+          if(s === 1) {
+            t.innerText = 0
+            return clearInterval(timeTodo)
+          }
+          t.innerText = --s
+        },1000)
+      }
+      if(f) {
+        d.style.display = 'flex'
+      }else {
+        d.style.display = 'none'
+      }
+    }
+    function createImgShow(name,file) {
+      let i = baseImgArr.length - 1
+      let input = document.createElement('input')
+      input.placeholder = name
+      input.onblur = () => {
+        baseImgArr[i].name = input.value
+      }
+      let img = document.createElement('img')
+      img.alt = name
+      img.src = window.URL.createObjectURL(file)
+      let box = document.createElement('div')
+      box.appendChild(img)
+      box.appendChild(input)
+      box.className = 'base-box'
+      const selector = document.querySelector('#imgs-box')
+      selector.insertBefore(box,document.querySelector('.base-box.add-box'))
+    }
+    function addBaseImg(e) {
+      for(let i = 0;i<e.files.length;i++) {
+        let file = e.files[i]
+        let name = file.name.replace(/\.\w+$/,'')
+        baseImgArr.push({name,file})
+        createImgShow(name,file)
+      }
+    }
+    /* 初始化 */
+    async function init () {
+      // load face detection, face landmark model and face recognition models
+      // 加载人脸检测、人脸标注模型和人脸识别模型
+      console.info('加载人脸检测、人脸标注模型和人脸识别模型')
+
+      await faceapi.nets.ssdMobilenetv1.load('/model')
+      await faceapi.loadFaceLandmarkModel('/model')
+      await faceapi.loadFaceRecognitionModel('/model')
+      return true
+    }
+    /* 获取面部特征符 */
+    async function getSignature (i) {
+      const imgFile = baseImgArr[i]
+      let img = document.createElement('img')
+      img.alt = imgFile.name
+      img.src = window.URL.createObjectURL(imgFile.file)
+      const imgEl = img
+      await faceapi.bufferToImage(imgFile.file)
+      let minConfidence = 0.5
+      const fullFaceDescriptions = await faceapi
+        .detectAllFaces(imgEl, new faceapi.SsdMobilenetv1Options({ minConfidence }))
+        .withFaceLandmarks()
+        .withFaceDescriptors()
+      if (!fullFaceDescriptions.length) {
+        return false
+      }
+      // create FaceMatcher with automatically assigned labels
+      // from the detection results for the reference image
+      // faceMatcher = new faceapi.FaceMatcher(fullFaceDescriptions)
+      // faceMatcher['name'] = name
+      let tempArr = fullFaceDescriptions[0].descriptor
+      if(tempArr) {
+        baseSignArr.push({
+          name: imgFile.name,
+          faceArr: tempArr
+        })
+        return true
+      }else {
+        return false
+      }
+
+    }
+    /* 标注 */
+    /* 对比特征符 */
+    /* 初始化 */
+    window.onload = () => {
+      init()
+        .then(res => {
+          console.log('--初始化完成--', res)
+        })
+        .catch(err => {
+          alert('初始化失败')
+          console.error('--初始化失败--', err)
+        })
+    }
+</script>
+</html>

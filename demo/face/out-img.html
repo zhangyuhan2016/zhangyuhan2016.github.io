@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta name="keywords" content="zhangyuhan2016,face.js,机器学习,人脸识别">
+    <meta name="description" content="zhangyuhan2016's demo">
+    <meta name="author" content="zhangyuhan2016">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-page-mode" content="app">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <title>人脸识别</title>
+    <script src="face-api-my.js"></script>
+    <link rel="stylesheet" href="./test.css">
+    <style>
+        #video,#canvas {display: block;margin:1em auto;width:180px;height:180px;}
+    </style>
+</head>
+<body>
+<header>单个人脸识别</header>
+<main>
+    <div id="imgs-box"></div>
+    <div class="add-box">
+        <span>添加测试人脸图片</span>
+        <input type="file" onchange="addTestImg(this)" accept=".jpg, .jpeg, .png">
+    </div>
+</main>
+</body>
+<script>
+    let baseImgArr = []
+    let dTest = window.localStorage.getItem('face') || null
+    dTest = JSON.parse(dTest)
+    function showTip(n) {
+      let d = document.querySelector('#dTest')
+      d.innerHTML = `<h5>以下为识别结果</h5><hr>`
+      let i = document.createElement('span')
+      i.innerText = n
+      document.querySelector('#dTest').appendChild(i)
+    }
+    function createImgShow(name,file) {
+      let input = document.createElement('input')
+      input.value = name
+      input.disabled = true
+      let img = document.createElement('img')
+      img.alt = name
+      img.src = window.URL.createObjectURL(file)
+      let box = document.createElement('div')
+      box.appendChild(img)
+      box.appendChild(input)
+      box.className = 'base-box'
+      const selector = document.querySelector('#imgs-box')
+      selector.insertBefore(box,document.querySelector('.base-box.add-box'))
+      return input
+    }
+    function addTestImg(e) {
+      let file = e.files[0]
+      let text = createImgShow('待识别',file)
+      baseImgArr = [{
+        name: '测试',
+        file
+      }]
+      getSignature(0).then(res => {
+        let tempStr = '未检测到匹配的人脸'
+        if(res) {
+          console.log('--res--', res)
+          if(res.s < 0.5) {
+            tempStr = '你是' + res.name
+          } else {
+            tempStr = '找不到匹配项,猜测你是' + res.name
+          }
+        }
+        text.value = tempStr
+      }).catch(err => {
+        console.error(err)
+      })
+    }
+    /* 初始化 */
+    async function init () {
+      // load face detection, face landmark model and face recognition models
+      // 加载人脸检测、人脸标注模型和人脸识别模型
+      console.info('加载人脸检测、人脸标注模型和人脸识别模型')
+
+      await faceapi.nets.ssdMobilenetv1.load('/model')
+      await faceapi.loadFaceLandmarkModel('/model')
+      await faceapi.loadFaceRecognitionModel('/model')
+      return true
+    }
+    /* 对比面部特征符 */
+    async function getSignature (i) {
+      const imgFile = baseImgArr[i]
+      let img = document.createElement('img')
+      img.alt = imgFile.name
+      img.src = window.URL.createObjectURL(imgFile.file)
+      const imgEl = img
+      await faceapi.bufferToImage(imgFile.file)
+      let minConfidence = 0.5
+      const fullFaceDescriptions = await faceapi
+        .detectAllFaces(imgEl, new faceapi.SsdMobilenetv1Options({ minConfidence }))
+        .withFaceLandmarks()
+        .withFaceDescriptors()
+      if (!fullFaceDescriptions.length) {
+        return false
+      }
+      // create FaceMatcher with automatically assigned labels
+      // from the detection results for the reference image
+      faceMatcher = new faceapi.FaceMatcher(fullFaceDescriptions)
+      let score = null
+      if(Array.isArray(dTest)) {
+        score = dTest.map(v => {
+          let ds = Object.values(v.faceArr)
+          return {
+            name: v.name,
+            s: faceMatcher.findBestMatch(ds).distance
+          }
+        }).sort((a,b) => a.s - b.s)[0]
+        console.log('--score--', score)
+      }
+      return score
+    }
+    /* 标注 */
+    /* 对比特征符 */
+    /* 初始化 */
+    window.onload = () => {
+      init()
+        .then(res => {
+          console.log('--初始化完成--', res)
+        })
+        .catch(err => {
+          alert('初始化失败')
+          console.error('--初始化失败--', err)
+        })
+    }
+</script>
+</html>

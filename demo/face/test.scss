@@ -1,0 +1,190 @@
+body {
+  font-family: "Microsoft YaHei","微软雅黑";
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  background-color: #f8f8f8;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+header,footer {
+  text-align: center;
+}
+header{
+  background-color: #fff;
+  font-size: 22px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 60px;
+  line-height: 60px;
+}
+footer{
+  background-color: #435b71;
+  color: white;
+  font-weight: bold;
+  height: 80px;
+  padding-top: 10px;
+  box-sizing: border-box;
+  > a {
+    color: #ffc107;
+  }
+}
+.h-b{
+  transition: all .2s ease-out;
+  box-shadow: 0 2px 43px -4px rgba(0,0,0,.19);
+  &:hover{
+    transform: translateY(2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.05);
+  }
+}
+main{
+  padding: 4px;
+  box-sizing: border-box;
+  flex: 1;
+  >button {
+    margin: 10px 0;
+    background: #40b883;
+    color: white;
+    font-size: 24px;
+    width: 100%;
+    height: 100px;
+    border-radius: 50px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    @extend .h-b;
+    &.test {
+      background: #409eff;
+      box-shadow: 0 2px 43px -4px rgba(64, 158, 255, 0.59);
+    }
+    &.other {
+      background: #E6A23C;
+      box-shadow: 0 2px 43px -4px rgba(230, 162, 60, 0.59);
+    }
+    box-shadow: 0 2px 43px -4px rgba(64, 184, 131, 0.59);
+    >span {
+      font-size: 18px;
+    }
+  }
+}
+#imgs-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  @media screen and (min-width: 660px) {
+    column-count: 5;
+    column-width: 300px;
+    display: block;
+  }
+  .base-box {
+    border: 1px dashed #2196F3;
+    box-sizing: border-box;
+    margin: 4px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    @extend .h-b;
+    @media screen and (max-width: 375px) {
+      max-width: 100%;
+    }
+    @media screen and (min-width: 375px) {
+      max-width: 375px;
+    }
+    >input {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      height: 50px;
+      font-size: 24px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    >img {
+      width: 100%;
+    }
+  }
+}
+.add-box {
+  border: 1px solid #409EFF;
+  box-sizing: border-box;
+  position: relative;
+  margin: 4px 0;
+  width: 100%;
+  height: 100%;
+  height: 80px;
+  cursor: pointer;
+  >span,>input {
+    cursor: pointer;
+    position: absolute;
+    background-color: #409EFF;
+    color: white;
+    font-size: 24px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  >span {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+}
+.dialog-an {
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffffc9;
+  position: fixed;
+  margin: 0;
+  cursor: no-drop;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  display: none;
+  .rotate {
+    width: 100px;
+    height: 100px;
+    background-color: #4caf50;
+    animation: Frotate 4s infinite alternate;
+  }
+}
+@keyframes Frotate {
+  60% {
+    transform: rotate(60deg);
+  }
+  80% {
+    transform: rotate(90deg) scale(0.5);
+  }
+  100%{
+    transform: rotate(30deg);
+  }
+}
+#dTest {
+  >span {
+    display: inline-block;
+    padding: 0 10px;
+    height: 32px;
+    line-height: 30px;
+    font-size: 12px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    border: 1px solid rgba(103,194,58,.2);
+    background-color: rgba(103,194,58,.1);
+    color: #67c23a;
+    white-space: nowrap;
+    + span {
+      margin: 4px;
+    }
+  }
+}

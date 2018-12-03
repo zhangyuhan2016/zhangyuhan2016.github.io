@@ -9,6 +9,10 @@
 
 [更多过程](https://zhangyuhan2016.github.io/article/new-blog.html)
 
+### news
+
+- [face.js 人脸识别](https://zhangyuhan2016.github.io/face/index.html)
+
 ### 计划
 - [ ] markdown实时预览
 - [ ] index页面自动生成

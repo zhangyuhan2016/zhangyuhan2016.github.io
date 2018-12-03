@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta name="keywords" content="zhangyuhan2016,face.js,机器学习,人脸识别">
+    <meta name="description" content="zhangyuhan2016's demo">
+    <meta name="author" content="zhangyuhan2016">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-page-mode" content="app">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <title>信息录入</title>
+    <script src="face-api-my.js"></script>
+    <link rel="stylesheet" href="./test.css">
+    <style>
+        .rect-video {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 6px solid #409eff;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .rect-video span {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            background-color: rgba(255, 255, 255, 0.73);
+            display: none;
+            color: #409eff;
+        }
+        .rect-video video {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<header>刷脸识别</header>
+<main>
+    <div class="rect-video">
+        <span>欢迎,张雨涵</span>
+        <video id="video" autoplay></video>
+    </div>
+    <div id="dTest">
+        <h5>以下为识别结果</h5>
+        <hr>
+    </div>
+    <button onclick="reCheck()">再试一次</button>
+</main>
+<dialog class="dialog-an">
+    <div class="rotate"></div>
+    <br>
+</dialog>
+</body>
+<script>
+  let timeTodo = null
+  let checkArr = []
+  let checkTimeStep = 300
+  let status = true
+  let allS = 3
+  let dTest = window.localStorage.getItem('face') || null
+  dTest = JSON.parse(dTest)
+ function reCheck() {
+    if(allS > 0) {
+      return false
+    }
+   document.querySelector('#dTest').innerHTML = `<h5>以下为识别结果</h5><hr>`
+   document.querySelector('.rect-video span').style.display = 'none'
+   checkArr = []
+   status = true
+   allS = 3
+   createSrcImg.play()
+   checkTimes()
+ }
+  function showTip(n) {
+    let d = document.querySelector('#dTest')
+    let i = document.createElement('span')
+    i.innerText = n
+    d.appendChild(i)
+  }
+  function showVD(str) {
+    let s = document.querySelector('.rect-video span')
+    s.style.display = 'flex'
+    s.innerHTML = str
+  }
+  function showDia (f, s,str) {
+    clearInterval(timeTodo)
+    let d = document.querySelector('dialog')
+    if (f) {
+      d.style.display = 'flex'
+    } else {
+      return d.style.display = 'none'
+    }
+    d.innerHTML = `<div class="rotate"></div><br>`
+    let createTemplate = (str) => `<span>${str[0]}<span name="tip">${s}</span>s</span><br><span>${str[1]}</span>`
+    d.innerHTML += createTemplate(str)
+    let t = document.querySelector('dialog span[name="tip"]')
+    if (s > 0) {
+      clearInterval(timeTodo)
+      timeTodo = setInterval(() => {
+        if (s === 1) {
+          t.innerText = 0
+          return clearInterval(timeTodo)
+        }
+        t.innerText = --s
+      }, 1000)
+    }
+  }
+
+  /* 初始化 */
+  async function init () {
+    // load face detection, face landmark model and face recognition models
+    // 加载人脸检测、人脸标注模型和人脸识别模型
+    console.info('加载人脸检测、人脸标注模型和人脸识别模型')
+
+    await faceapi.nets.ssdMobilenetv1.load('/model')
+    await faceapi.loadFaceLandmarkModel('/model')
+    await faceapi.loadFaceRecognitionModel('/model')
+    return true
+  }
+
+
+  /* 标注 */
+  /* 对比特征符 */
+  const createSrcImg = {
+    img: null,
+    click: null,
+    stop: null,
+    play: null
+  }
+  async function initVideo () {
+    let video = document.getElementById('video')
+    let canvas = document.createElement('canvas')
+    let ctx = canvas.getContext('2d')
+    let img = document.createElement('img')
+    let result = false
+    await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: true
+    }).then(stream => {
+      result = true
+      createSrcImg.stop = () => {
+        video.pause()
+      }
+      createSrcImg.play = () => {
+        video.play()
+      }
+      video.srcObject = stream
+      createSrcImg.click = (callback) => {
+        ctx.drawImage(video, 0, 0, canvas.width = video.videoWidth, canvas.height = video.videoHeight)
+        let dd = canvas.toDataURL('image/png')
+        console.log('--dd--', dd)
+        img.src = dd
+        createSrcImg.img = img
+        typeof callback === 'function' ?  callback(img) : null
+      }
+    }).catch(err => {
+      alert('error: ' + err.message)
+    })
+    console.log('--result--', result)
+    return result
+  }
+
+  async function getSignature2 (imgEl) {
+    let minConfidence = 0.5
+    const fullFaceDescriptions = await faceapi
+      .detectAllFaces(imgEl, new faceapi.SsdMobilenetv1Options({minConfidence}))
+      .withFaceLandmarks()
+      .withFaceDescriptors()
+    if (!fullFaceDescriptions.length) {
+      return false
+    }
+    // create FaceMatcher with automatically assigned labels
+    // from the detection results for the reference image
+    faceMatcher = new faceapi.FaceMatcher(fullFaceDescriptions)
+    let score = null
+    if (Array.isArray(dTest)) {
+      score = dTest.map(v => {
+        let ds = Object.values(v.faceArr)
+        return {
+          name: v.name,
+          s: faceMatcher.findBestMatch(ds).distance
+        }
+      }).sort((a, b) => a.s - b.s)[0]
+      console.log('--score--', score)
+    }
+    return score
+  }
+  /* 定时器 */
+  function checkTimes() {
+    let t = setInterval(() => {
+      console.log('--allS,status--', allS,status)
+      if(!status) {
+        return false
+      } else {
+        createSrcImg.click(img => {
+          status = false
+          checkImg(img,(f) => {
+            if(f) {
+              --allS
+            }
+            status = true
+          })
+        })
+      }
+      if(allS === 1) {
+        clearInterval(t)
+        createSrcImg.stop()
+        let r = checkArr.sort((a, b) => a.s - b.s)[0]
+        showVD('欢迎回来<br/>' + r.name)
+      }
+    },checkTimeStep)
+  }
+  /* 检测 */
+  function checkImg(img,callback) {
+      getSignature2(img).then(res => {
+        console.log('--res--', res)
+        if(res) {
+          checkArr.push(res)
+          if(res.s < 0.5) {
+            showTip('你是' + res.name)
+          } else {
+            showTip('找不到匹配项,猜测你是' + res.name)
+          }
+        } else {
+          showTip('未检测到匹配的人脸')
+        }
+        callback(Boolean(res))
+      }).catch(err => {
+        showDia(true,0,['识别过程出现了一些问题:',err])
+      })
+  }
+  /* 初始化 */
+  showDia(true,40,['正在初始化,预估需要： ','请稍等片刻'])
+  window.onload = () => {
+    Promise.all([initVideo(),init()]).then(res => {
+      let f = res.some(v => !v)
+      if(f) {
+        let tip = ['抱歉,出了一些问题：']
+        if(!res[0]) {
+          tip[1] = '无法获取摄像机权限,浏览器不支持或未允许'
+        }
+        if(!res[1]) {
+          tip[1] =  '初始化Face.js失败,请刷新重试'
+        }
+        showDia(true,0,tip)
+      } else {
+        showDia(false)
+        checkTimes()
+      }
+    }).catch(err => {
+      showDia(true,0,['出现错误：',err])
+    })
+  }
+</script>
+</html>
