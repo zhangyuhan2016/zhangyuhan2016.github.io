@@ -88,9 +88,9 @@
       // 加载人脸检测、人脸标注模型和人脸识别模型
       console.info('加载人脸检测、人脸标注模型和人脸识别模型')
 
-      await faceapi.nets.ssdMobilenetv1.load('/model')
-      await faceapi.loadFaceLandmarkModel('/model')
-      await faceapi.loadFaceRecognitionModel('/model')
+      await faceapi.nets.ssdMobilenetv1.load('/demo/face/model')
+      await faceapi.loadFaceLandmarkModel('/demo/face/model')
+      await faceapi.loadFaceRecognitionModel('/demo/face/model')
       return true
     }
     /* 对比面部特征符 */
