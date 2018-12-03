@@ -11,7 +11,7 @@
 
 ### news
 
-- [face.js 人脸识别](https://zhangyuhan2016.github.io/face/index.html)
+- [face.js 人脸识别](https://zhangyuhan2016.github.io/demo/face/index.html)
 
 ### 计划
 - [ ] markdown实时预览
