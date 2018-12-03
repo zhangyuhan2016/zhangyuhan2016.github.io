@@ -19,6 +19,7 @@
     <meta charset="UTF-8">
     <title>信息录入</title>
     <script src="face-api-my.js"></script>
+    <script src="all.js"></script>
     <link rel="stylesheet" href="./test.css">
 </head>
 <body>
@@ -48,7 +49,6 @@
 <script>
     let baseImgArr = []
     let baseSignArr = []
-    let timeTodo = null
     function startAddBase () {
       if(baseImgArr.length <= 0) {
         return alert('未添加数据')
@@ -79,26 +79,6 @@
       })
       return Promise.all(result)
     }
-    function showDia (f,s) {
-      let d = document.querySelector('dialog')
-      let t = document.querySelector('dialog span[name="tip"]')
-      t.innerText = s || 0
-      if(s > 0) {
-        clearInterval(timeTodo)
-        timeTodo = setInterval(() => {
-          if(s === 1) {
-            t.innerText = 0
-            return clearInterval(timeTodo)
-          }
-          t.innerText = --s
-        },1000)
-      }
-      if(f) {
-        d.style.display = 'flex'
-      }else {
-        d.style.display = 'none'
-      }
-    }
     function createImgShow(name,file) {
       let i = baseImgArr.length - 1
       let input = document.createElement('input')
@@ -123,17 +103,6 @@
         baseImgArr.push({name,file})
         createImgShow(name,file)
       }
-    }
-    /* 初始化 */
-    async function init () {
-      // load face detection, face landmark model and face recognition models
-      // 加载人脸检测、人脸标注模型和人脸识别模型
-      console.info('加载人脸检测、人脸标注模型和人脸识别模型')
-
-      await faceapi.nets.ssdMobilenetv1.load('/demo/face/model')
-      await faceapi.loadFaceLandmarkModel('/demo/face/model')
-      await faceapi.loadFaceRecognitionModel('/demo/face/model')
-      return true
     }
     /* 获取面部特征符 */
     async function getSignature (i) {
@@ -170,14 +139,20 @@
     /* 标注 */
     /* 对比特征符 */
     /* 初始化 */
+    showDia(true,40,['正在初始化,预估需要： ','请稍等片刻'])
     window.onload = () => {
+      let tip = ['抱歉,出了一些问题：']
       init()
         .then(res => {
+          if(!res) {
+            tip[1] =  '初始化Face.js失败,请刷新重试'
+            showDia(true,0,tip)
+          }
+          showDia(false)
           console.log('--初始化完成--', res)
         })
         .catch(err => {
-          alert('初始化失败')
-          console.error('--初始化失败--', err)
+          showDia(true,0,['出现错误：',err])
         })
     }
 </script>

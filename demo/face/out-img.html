@@ -19,6 +19,7 @@
     <meta charset="UTF-8">
     <title>人脸识别</title>
     <script src="face-api-my.js"></script>
+    <script src="all.js"></script>
     <link rel="stylesheet" href="./test.css">
     <style>
         #video,#canvas {display: block;margin:1em auto;width:180px;height:180px;}
@@ -33,6 +34,13 @@
         <input type="file" onchange="addTestImg(this)" accept=".jpg, .jpeg, .png">
     </div>
 </main>
+<dialog class="dialog-an">
+    <div class="rotate"></div>
+    <br>
+    <span>正在提取特征符,剩余时间为: <span name="tip">120</span>s</span>
+    <br>
+    <span>成功后会自动跳转首页,请点击选择测试</span>
+</dialog>
 </body>
 <script>
     let baseImgArr = []
@@ -82,17 +90,6 @@
         console.error(err)
       })
     }
-    /* 初始化 */
-    async function init () {
-      // load face detection, face landmark model and face recognition models
-      // 加载人脸检测、人脸标注模型和人脸识别模型
-      console.info('加载人脸检测、人脸标注模型和人脸识别模型')
-
-      await faceapi.nets.ssdMobilenetv1.load('/demo/face/model')
-      await faceapi.loadFaceLandmarkModel('/demo/face/model')
-      await faceapi.loadFaceRecognitionModel('/demo/face/model')
-      return true
-    }
     /* 对比面部特征符 */
     async function getSignature (i) {
       const imgFile = baseImgArr[i]
@@ -128,14 +125,20 @@
     /* 标注 */
     /* 对比特征符 */
     /* 初始化 */
+    showDia(true,40,['正在初始化,预估需要： ','请稍等片刻'])
     window.onload = () => {
+      let tip = ['抱歉,出了一些问题：']
       init()
         .then(res => {
+          if(!res) {
+            tip[1] =  '初始化Face.js失败,请刷新重试'
+            showDia(true,0,tip)
+          }
+          showDia(false)
           console.log('--初始化完成--', res)
         })
         .catch(err => {
-          alert('初始化失败')
-          console.error('--初始化失败--', err)
+          showDia(true,0,['出现错误：',err])
         })
     }
 </script>
