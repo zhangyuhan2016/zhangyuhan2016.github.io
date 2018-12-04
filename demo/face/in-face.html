@@ -41,7 +41,7 @@
 <main>
     <div id="imgs-box"></div>
     <div class="rect-video">
-        <video id="video" autoplay></video>
+        <video id="video" autoplay playsinline></video>
     </div>
     <button onclick="createVideoImg()">采集照片</button>
     <button onclick="startAddBase()">训练模型<br><span>保存至 LocalStorage</span></button>
@@ -193,7 +193,6 @@
       createSrcImg.click = () => {
         ctx.drawImage(video, 0, 0, canvas.width = video.videoWidth, canvas.height = video.videoHeight)
         let dd = canvas.toDataURL('image/png')
-        console.log('--dd--', dd)
         img.src = dd
         createSrcImg.img = img
         addBaseImg(img)

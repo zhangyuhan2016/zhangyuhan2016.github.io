@@ -50,6 +50,14 @@
         .rect-video video {
             height: 100%;
         }
+        .rect-video svg {
+            font-size: 27px;
+            color: #40b883;
+            display: inline-block;
+            position: absolute;
+            top: 15px;
+            z-index: 4;
+        }
     </style>
 </head>
 <body>
@@ -57,7 +65,8 @@
 <main>
     <div class="rect-video">
         <span>欢迎,张雨涵</span>
-        <video id="video" autoplay></video>
+        <svg class="icon" style="width: 1.3125em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1344 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1109"><path d="M953.758753 148.534622h122.820327c55.410161 0.0553 100.368704 43.963151 100.617552 98.294971l2.018434 540.774412c0.276498 53.889423-44.1014 97.797275-99.069165 98.046123h-0.967742l-903.069489-2.101384c-55.49311-0.165899-100.451654-44.1567-100.755802-98.543818L73.389734 246.857243c-0.248848-54.055321 44.239649-98.073772 99.400962-98.322621h153.89868c13.93549 0 30.331809-9.953921 36.580659-22.175124l41.004625-79.963166C416.606463 22.285723 449.122605 2.48848 476.800035 2.377881L802.459153 0.829493c27.78803-0.138249 60.193573 19.437796 72.691274 43.741954l42.221215 82.147498c6.221201 12.082954 22.479272 21.815677 36.387111 21.815677z m0 49.16131c-32.79264 0-66.414773-20.12904-81.179756-48.884812l-42.221215-82.119849c-3.953919-7.686639-18.96775-16.728117-27.649781-16.672818l-325.631468 1.548388c-8.79263 0.02765-24.082959 9.345626-27.981578 16.921666L408.11798 148.451673c-14.792633 28.838721-48.497715 49.24426-81.428604 49.244259H173.316042c-27.594481 0-49.852555 21.898626-49.769606 48.967762l2.018434 538.147683c0.193548 27.345633 22.783419 49.437808 50.682048 49.576057l903.01419 2.073734c27.262684 0.221198 49.548407-21.290331 49.741956-48.02767v-0.663594l-1.963135-540.774412c-0.165899-27.207384-22.67282-49.21661-50.4332-49.29956h-122.847976zM552.505135 258.138353c-118.119863 39.290338-181.410212 165.013892-141.345679 280.811174a221.612993 221.612993 0 0 0 78.801875 106.313407 24.276508 24.276508 0 0 1 5.08756 34.423977 25.437798 25.437798 0 0 1-35.142872 5.00461c-69.870996-51.041495-111.01387-131.447058-110.93092-216.857231 0-130.921712 94.894048-240.110696 220.894098-265.106097l-37.935499-37.216605a24.221208 24.221208 0 0 1 0.635945-34.755775 25.437798 25.437798 0 0 1 34.838724 0l93.013862 91.161327-93.013862 91.161328a25.437798 25.437798 0 0 1-35.474669-0.608296 24.276508 24.276508 0 0 1 0-34.175129l20.571437-20.15669z m83.059941 430.783584c124.562262-5.695855 220.838799-109.299583 215.032345-231.401015-3.981568-83.778836-55.907857-158.129096-134.129086-192.083027a24.387107 24.387107 0 0 1-13.188945-32.294944 25.24425 25.24425 0 0 1 32.930888-12.912447l0.608296 0.248848c99.788059 43.382506 164.101449 140.350287 164.073799 247.354938 0 146.046142-118.064564 265.078448-265.742043 270.331907l32.626741 31.963147a24.248858 24.248858 0 0 1-0.635945 34.783424 25.437798 25.437798 0 0 1-34.838724 0l-93.013862-91.161327 93.013862-91.161328a25.437798 25.437798 0 0 1 35.474669 0.608296 24.276508 24.276508 0 0 1 0 34.175129l-32.211995 31.548399z" p-id="1110"></path></svg>
+        <video id="video" autoplay playsinline></video>
     </div>
     <div id="dTest">
         <h5>以下为识别结果</h5>
@@ -116,7 +125,60 @@
     let canvas = document.createElement('canvas')
     let ctx = canvas.getContext('2d')
     let img = document.createElement('img')
+    let svg = document.querySelector('svg')
     let result = false
+    let selectVideo = []
+    let nowSelect = 0
+    let currentStream = null
+    let getDevs = devices => {
+        selectVideo = []
+        nowSelect = 0
+        devices.forEach(device => {
+          if (device.kind === 'videoinput') {
+            selectVideo.push({
+              value: device.deviceId,
+              label: device.label || '相机'
+            })
+          }
+        })
+    }
+    function stopMediaTracks(stream) {
+      stream.getTracks().forEach(track => {
+        track.stop()
+      })
+    }
+    await navigator.mediaDevices.enumerateDevices().then(getDevs)
+    svg.onclick = () => {
+      nowSelect++
+      let select = selectVideo[nowSelect%selectVideo.length]
+      console.log('切换摄像机',select)
+      console.log('--currentStream--', currentStream)
+      if (currentStream) {
+        stopMediaTracks(currentStream);
+      }
+      const videoConstraints = {};
+      if (select.value === '') {
+        videoConstraints.facingMode = 'environment';
+      } else {
+        videoConstraints.deviceId = { exact: select.value };
+      }
+      const constraints = {
+        video: videoConstraints,
+        audio: false
+      };
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(stream => {
+          currentStream = stream
+          video.srcObject = stream
+          return navigator.mediaDevices.enumerateDevices();
+        })
+        .then(getDevs)
+        .catch(error => {
+          console.error(error);
+        });
+    }
+    console.log('--selectVideo--', selectVideo)
     await navigator.mediaDevices.getUserMedia({
       audio: false,
       video: true
