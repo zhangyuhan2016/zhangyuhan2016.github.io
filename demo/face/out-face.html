@@ -48,6 +48,7 @@
             color: #409eff;
         }
         .rect-video video {
+            width: 100%;
             height: 100%;
         }
         .rect-video svg {
@@ -243,10 +244,17 @@
           checkImg(img,(f) => {
             if(f) {
               --allS
+            } else {
+              allS = 0
             }
             status = true
           })
         })
+      }
+      if(allS === 0) {
+        clearInterval(t)
+        createSrcImg.stop()
+        return showVD('请重试<br/>请再试一次')
       }
       if(allS === 1) {
         clearInterval(t)
