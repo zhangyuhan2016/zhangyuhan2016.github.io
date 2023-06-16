@@ -1,21 +1,42 @@
 // 数据存放点
 let mesArr=[];
-let strArr=[];
+
+const tempStorage = {
+  push (message) {
+    mesArr.push(message)
+    this.save()
+    mess(message.title, message.content)
+    this.draw()
+  },
+  draw () {
+    creAre(mesArr)
+  },
+  save () {
+    localStorage.setItem('play-message-wall', JSON.stringify(mesArr))
+  },
+  recover () {
+    mesArr = JSON.parse(localStorage.getItem('play-message-wall') || '[]')
+    this.draw()
+  }
+}
+
+tempStorage.recover()
+
 // 配置Wilddog
-let config = {
-  authDomain: "danmu.wilddog.com",
-  syncURL: "https://demo-tanmu.wilddogio.com"};
-wilddog.initializeApp(config);
-let ref = wilddog.sync().ref();
+// let config = {
+//   authDomain: "danmu.wilddog.com",
+//   syncURL: "https://demo-tanmu.wilddogio.com"};
+// wilddog.initializeApp(config);
+// let ref = wilddog.sync().ref();
 // 绑定 'child_added' 事件，当 message 节点下有子节点新增时，就会触发回调，回调的 `snapshot` 对象包含了新增的数据
-ref.child('messages').on('child_added', function(snapshot) {
-  mesArr.push(snapshot.val());
-  mess(snapshot.val().title,snapshot.val().content);
-  creAre(mesArr);
-});
-ref.child('message').on('child_added', function(snapshot) {
-  strArr.push(snapshot.val());
-});
+// ref.child('messages').on('child_added', function(snapshot) {
+//   mesArr.push(snapshot.val());
+//   mess(snapshot.val().title,snapshot.val().content);
+//   creAre(mesArr);
+// });
+// ref.child('message').on('child_added', function(snapshot) {
+//   strArr.push(snapshot.val());
+// });
 // 随机坐标
 let coordinate=(x=1000,y=500)=>Math.floor(Math.random()*x)+","+Math.floor(Math.random()*y);
 // 生成不重复的坐标
@@ -99,14 +120,20 @@ $('#myCanvas').on('click',function(e){
 // 提交数据
 function upData(){
   // 获取输入框的数据
-  let title=$('#name').val()||"佚名";
-  let text = $("#tst").val()||strArr[Math.floor(Math.random()*strArr.length)];
+  let title= $('#name').val()|| '';
+  let text = $("#tst").val() || ''
+
+  if (title === '' || text === '') {
+    return
+  }
+
+
   // 清空文本框
   $('#name').val("");
   $("#tst").val("");
   // 将数据写到云端 messages 节点下，child 用来定位子节点
-  let postsRef = ref.child("messages");
-  postsRef.push({
+  // let postsRef = ref.child("messages");
+  tempStorage.push({
     "coord":ranCoord(["100,100"]),
     "title": title,
     "content":text
@@ -134,13 +161,9 @@ function mess(tit,con){
 }
 // 回车事件
 $(document).ready(function(){
-  let upNum=5;
   $("body").keydown(function(event){
     if(event.keyCode == "13" ){
-      if(upNum){
-        upNum --;
-        upData()
-      }
+      upData()
     }
   });
 });
